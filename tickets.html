@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tickets — House of Tarab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">House of Tarab</a>
+  <a href="index.html" class="nav-link">← Back to Site</a>
+</nav>
+
+<section class="hero" style="padding-bottom: 2rem;">
+  <div class="hero-bg"></div>
+  <span class="hero-label">Secure Your Seat</span>
+  <h1 class="hero-title">House of<span>Tarab</span></h1>
+  <p class="hero-subtitle">THE DEBUT COLLECTION</p>
+  <p class="hero-tagline">July 16, 2026 · Atlanta, Georgia</p>
+  <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--text-muted); margin-top: 1rem;">Please select one ticket tier to proceed.</p>
+</section>
+
+<div class="section">
+  <div class="tickets-container">
+    <div class="ticket-list">
+      <!-- GA Ticket -->
+      <div class="ticket-card">
+        <div class="ticket-header">
+          <div class="ticket-info">
+            <h3>General Admission</h3>
+            <p>Seating in the main gallery, cocktail reception included.</p>
+          </div>
+          <div class="ticket-price">From $10.00</div>
+        </div>
+        <div class="field" style="max-width: 200px;">
+          <label>Name Your Price ($10+)</label>
+          <input type="number" value="10" min="10" onchange="updateCustomPrice(this.value)">
+        </div>
+        <div class="field" style="max-width: 200px; margin-top: 0.5rem;">
+          <label>Optional Donation ($)</label>
+          <input type="number" id="donation" value="0" min="0" placeholder="0" onchange="updateSummary()">
+        </div>
+        <div class="ticket-controls">
+          <div class="qty-selector">
+            <button class="qty-btn" onclick="updateTicketQty('ga', -1)">-</button>
+            <span class="qty-num" id="qty-ga">0</span>
+            <button class="qty-btn" onclick="updateTicketQty('ga', 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Press Basic -->
+      <div class="ticket-card">
+        <div class="ticket-header">
+          <div class="ticket-info">
+            <h3>Press Basic</h3>
+            <p>Reserved media seating, digital press kit.</p>
+          </div>
+          <div class="ticket-price">$200.00</div>
+        </div>
+        <div class="ticket-controls">
+          <div class="qty-selector">
+            <button class="qty-btn" onclick="updateTicketQty('press-basic', -1)">-</button>
+            <span class="qty-num" id="qty-press-basic">0</span>
+            <button class="qty-btn" onclick="updateTicketQty('press-basic', 1)">+</button>
+          </div>
+          <label class="footage-discount">
+            <input type="checkbox" id="discount-press-basic" onchange="toggleDiscount('press-basic')">
+            Footage discount (-$40)
+          </label>
+        </div>
+      </div>
+
+      <!-- Press Standard -->
+      <div class="ticket-card">
+        <div class="ticket-header">
+          <div class="ticket-info">
+            <h3>Press Standard</h3>
+            <p>Priority media seating, digital + physical press kit, early access.</p>
+          </div>
+          <div class="ticket-price">$350.00</div>
+        </div>
+        <div class="ticket-controls">
+          <div class="qty-selector">
+            <button class="qty-btn" onclick="updateTicketQty('press-std', -1)">-</button>
+            <span class="qty-num" id="qty-press-std">0</span>
+            <button class="qty-btn" onclick="updateTicketQty('press-std', 1)">+</button>
+          </div>
+          <label class="footage-discount">
+            <input type="checkbox" id="discount-press-std" onchange="toggleDiscount('press-std')">
+            Footage discount (-$70)
+          </label>
+        </div>
+      </div>
+
+      <!-- Press Premium -->
+      <div class="ticket-card">
+        <div class="ticket-header">
+          <div class="ticket-info">
+            <h3>Press Premium</h3>
+            <p>Front row media seating, full press kit, backstage interview access.</p>
+          </div>
+          <div class="ticket-price">$500.00</div>
+        </div>
+        <div class="ticket-controls">
+          <div class="qty-selector">
+            <button class="qty-btn" onclick="updateTicketQty('press-prem', -1)">-</button>
+            <span class="qty-num" id="qty-press-prem">0</span>
+            <button class="qty-btn" onclick="updateTicketQty('press-prem', 1)">+</button>
+          </div>
+          <label class="footage-discount">
+            <input type="checkbox" id="discount-press-prem" onchange="toggleDiscount('press-prem')">
+            Footage discount (-$100)
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <aside class="summary-panel">
+      <h2 class="summary-title">Order Summary</h2>
+      <div id="summary-items" class="summary-items">
+        <!-- Dynamic content -->
+        <p style="text-align: center; color: var(--text-muted); font-size: 12px;">No tickets selected</p>
+      </div>
+      <div class="summary-total">
+        <span>Total</span>
+        <span id="summary-total-val">$0.00</span>
+      </div>
+    </aside>
+  </div>
+
+  <form id="checkout-form" class="checkout-form" onsubmit="handleCheckout(event)">
+    <h2 class="summary-title" style="text-align: left; margin-bottom: 1.5rem; border: none;">Guest Information</h2>
+    <div class="form-grid">
+      <div class="field"><label>First Name</label><input type="text" id="f-name" required></div>
+      <div class="field"><label>Last Name</label><input type="text" id="l-name" required></div>
+    </div>
+    <div class="form-grid">
+      <div class="field"><label>Email Address</label><input type="email" id="email" required></div>
+      <div class="field"><label>Phone Number</label><input type="tel" id="phone" required></div>
+    </div>
+    <div class="form-grid single">
+      <div class="field">
+        <label>How did you hear about us?</label>
+        <select id="source" required>
+          <option value="" disabled selected>Select an option</option>
+          <option>Instagram</option>
+          <option>Email</option>
+          <option>Personal Invitation</option>
+          <option>Friend</option>
+          <option>Press</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-grid single">
+      <div class="field"><label>Note (Optional)</label><textarea id="note"></textarea></div>
+    </div>
+    <div style="text-align: center; margin-top: 2rem;">
+      <button type="submit" class="btn-primary">Pay with Stripe</button>
+    </div>
+  </form>
+
+  <div id="success-panel" class="success-panel">
+    <h3>Purchase Successful</h3>
+    <p>Thank you for securing your seat at the House of Tarab debut show. You will receive a confirmation email shortly with your digital tickets.</p>
+    <div style="margin-top: 2rem;">
+      <a href="index.html" class="nav-link">← Back to Home</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p class="footer-logo">House of Tarab — Founded by Joy</p>
+  <div style="margin: 1rem 0; display: flex; justify-content: center; gap: 1.5rem;">
+    <a href="#" class="nav-link" style="font-size: 10px;">Instagram</a>
+    <a href="#" class="nav-link" style="font-size: 10px;">Twitter</a>
+    <a href="#" class="nav-link" style="font-size: 10px;">TikTok</a>
+  </div>
+  <p>hello@houseoftarab.com · Atlanta, Georgia</p>
+  <p style="margin-top:0.5rem;font-style:italic;color:var(--gold);font-family:'Cormorant Garamond',serif;">For the rooms that remember you.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

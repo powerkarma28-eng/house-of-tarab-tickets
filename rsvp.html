@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSVP — House of Tarab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">House of Tarab</a>
+  <a href="index.html" class="nav-link">← Back to Site</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <span class="hero-label">The Debut Collection</span>
+  <h1 class="hero-title">House of<span>Tarab</span></h1>
+  <p class="hero-subtitle">RSVP & INQUIRIES</p>
+  <p class="hero-tagline">July 16, 2026 · Atlanta, Georgia</p>
+</section>
+
+<div class="section" style="max-width: 800px;">
+  <div style="text-align: center; margin-bottom: 4rem;">
+    <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.4rem; line-height: 1.8; color: var(--smoke);">
+      Tickets for the House of Tarab debut show are now available for purchase. <br>
+      Please secure your seat via our ticketing page.
+    </p>
+    <div style="margin-top: 2rem;">
+      <a href="tickets.html" class="btn-primary">Purchase Tickets</a>
+    </div>
+  </div>
+
+  <div class="gold-divider"></div>
+
+  <div id="rsvp-form-container">
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <h2 style="font-family: 'Cinzel', serif; font-size: 1.2rem; color: var(--gold); letter-spacing: 0.2em;">PRESS & INDUSTRY INQUIRIES</h2>
+      <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--text-muted); margin-top: 1rem;">
+        For press credentials, styling inquiries, or industry access, please complete the form below.
+      </p>
+    </div>
+
+    <form id="rsvp-form" onsubmit="event.preventDefault(); showToast('Inquiry sent. We will be in touch.'); this.reset();">
+      <div class="form-grid">
+        <div class="field"><label>First Name</label><input type="text" required></div>
+        <div class="field"><label>Last Name</label><input type="text" required></div>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Email Address</label><input type="email" required></div>
+        <div class="field"><label>Organization</label><input type="text"></div>
+      </div>
+      <div class="form-grid single">
+        <div class="field">
+          <label>Inquiry Type</label>
+          <select required>
+            <option value="" disabled selected>Select one</option>
+            <option>Press / Media Access</option>
+            <option>Stylist / Buyer Inquiry</option>
+            <option>Industry Professional</option>
+            <option>Sponsorship</option>
+            <option>General Inquiry</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-grid single">
+        <div class="field"><label>Message</label><textarea rows="4"></textarea></div>
+      </div>
+      <div style="text-align: center; margin-top: 2rem;">
+        <button type="submit" class="btn-primary">Send Inquiry</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <p class="footer-logo">House of Tarab — Founded by Joy</p>
+  <div style="margin: 1rem 0; display: flex; justify-content: center; gap: 1.5rem;">
+    <a href="#" class="nav-link" style="font-size: 10px;">Instagram</a>
+    <a href="#" class="nav-link" style="font-size: 10px;">Twitter</a>
+    <a href="#" class="nav-link" style="font-size: 10px;">TikTok</a>
+  </div>
+  <p>hello@houseoftarab.com · Atlanta, Georgia</p>
+  <p style="margin-top:0.5rem;font-style:italic;color:var(--gold);font-family:'Cormorant Garamond',serif;">For the rooms that remember you.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
