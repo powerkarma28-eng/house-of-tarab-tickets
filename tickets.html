@@ -1,189 +1,520 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tickets — House of Tarab</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Tickets — House of Tarab Debut Show</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#C9A96E;--gold-light:#E8D5A3;--deep:#1C0F0A;--surface:#2E1A13;--smoke:#F5EDE4;--muted:#9A8070;--border:rgba(201,169,110,0.15);--green:#6B9E78;--stripe-blue:#635BFF}
+html{scroll-behavior:smooth}
+body{background:var(--deep);color:var(--smoke);font-family:'Jost',sans-serif;font-weight:200;letter-spacing:.04em}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;background:rgba(28,15,10,.92);backdrop-filter:blur(16px);border-bottom:.5px solid var(--border)}
+.nav-logo{font-family:'Cinzel',serif;font-size:13px;letter-spacing:.25em;color:var(--gold);text-decoration:none;text-transform:uppercase}
+.nav-back{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
+.nav-back:hover{color:var(--gold)}
+.hero{padding:9rem 2rem 4rem;text-align:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 30%,rgba(201,169,110,.07) 0%,transparent 70%)}
+.hero-label{font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:block;position:relative}
+.hero-title{font-family:'Cinzel',serif;font-size:clamp(2.5rem,7vw,5.5rem);color:var(--smoke);letter-spacing:.12em;line-height:.95;position:relative}
+.hero-title span{display:block;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(2rem,5vw,4rem);color:var(--gold)}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,2vw,1.3rem);color:var(--muted);margin-top:1rem;position:relative}
+.event-bar{display:flex;justify-content:center;flex-wrap:wrap;gap:0;margin:2.5rem auto;max-width:900px;padding:0 2rem}
+.event-item{flex:1;min-width:140px;text-align:center;padding:1.5rem 1rem;border:.5px solid var(--border)}
+.event-item:not(:last-child){border-right:none}
+.event-lbl{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;display:block}
+.event-val{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.95rem,1.6vw,1.15rem);color:var(--smoke);line-height:1.5}
+.tickets-wrap{max-width:1000px;margin:0 auto;padding:2rem 2rem 2rem}
+.tickets-title{font-family:'Cinzel',serif;font-size:clamp(1.4rem,3vw,2rem);color:var(--smoke);letter-spacing:.1em;text-align:center;margin-bottom:.8rem}
+.tickets-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--muted);text-align:center;margin-bottom:3rem;line-height:1.7}
+.ticket-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-bottom:3rem}
+.ticket-card{border:.5px solid var(--border);background:var(--surface);transition:border-color .3s;cursor:pointer;position:relative}
+.ticket-card:hover,.ticket-card.selected{border-color:var(--gold)}
+.ticket-card.selected::after{content:'Selected';position:absolute;top:1rem;right:1rem;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--deep);background:var(--gold);padding:.2rem .6rem}
+.ticket-header{padding:1.5rem 1.5rem 1rem;border-bottom:.5px solid var(--border)}
+.ticket-tier{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+.ticket-name{font-family:'Cinzel',serif;font-size:clamp(1rem,1.8vw,1.3rem);color:var(--smoke);margin-bottom:.3rem}
+.ticket-price{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,2.5vw,2rem);color:var(--gold)}
+.ticket-price-note{font-size:10px;color:var(--muted);margin-top:.2rem}
+.ticket-disc{font-size:10px;color:var(--green);margin-top:.3rem}
+.ticket-body{padding:1rem 1.5rem 1.5rem}
+.ticket-feature{font-size:12px;color:var(--muted);line-height:1.9;padding-left:.8rem;position:relative}
+.ticket-feature::before{content:'·';position:absolute;left:0;color:var(--gold)}
+.checkout-wrap{max-width:680px;margin:0 auto;padding:0 2rem 6rem}
+.checkout-box{border:.5px solid var(--border);background:var(--surface)}
+.checkout-header{padding:1.5rem 2rem;border-bottom:.5px solid var(--border);background:var(--deep)}
+.checkout-header h3{font-family:'Cinzel',serif;font-size:13px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.checkout-body{padding:2rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.2rem}
+.form-grid.single{grid-template-columns:1fr}
+.field{display:flex;flex-direction:column;gap:.4rem}
+.field label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.field input,.field select,.field textarea{background:rgba(255,255,255,.03);border:.5px solid rgba(201,169,110,.25);color:var(--smoke);padding:.8rem 1rem;font-family:'Jost',sans-serif;font-size:13px;font-weight:200;outline:none;transition:border-color .3s;width:100%}
+.field input:focus,.field select:focus{border-color:var(--gold)}
+.field input::placeholder{color:var(--muted)}
+.field select option{background:var(--deep)}
+.donation-note{font-size:11px;color:var(--muted);font-style:italic;margin-top:.4rem;line-height:1.6}
+.order-summary{background:var(--deep);border:.5px solid var(--border);padding:1.5rem;margin-bottom:1.5rem}
+.order-summary h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.2em;color:var(--gold);margin-bottom:1rem;text-transform:uppercase}
+.order-row{display:flex;justify-content:space-between;font-size:12px;padding:.4rem 0;border-bottom:.5px solid rgba(201,169,110,.06)}
+.order-row:last-child{border-bottom:none;padding-top:.8rem;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic}
+.order-row span:first-child{color:var(--muted)}
+.order-row span:last-child{color:var(--gold)}
+.payment-btns{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem}
+.pay-btn{width:100%;border:none;padding:1.1rem;font-family:'Jost',sans-serif;font-size:13px;font-weight:600;letter-spacing:.05em;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:.7rem}
+.stripe-btn{background:var(--stripe-blue);color:#fff}
+.stripe-btn:hover{background:#5047e6}
+.paypal-btn{background:#FFC439;color:#003087}
+.paypal-btn:hover{background:#f0b429}
+.secure-note{font-size:10px;color:var(--muted);text-align:center;margin-top:.8rem;letter-spacing:.05em}
+.step-indicator{display:flex;gap:0;margin-bottom:2.5rem;border:.5px solid var(--border)}
+.step{flex:1;padding:.8rem;text-align:center;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);background:transparent;border:none}
+.step.active{background:rgba(201,169,110,.1);color:var(--gold)}
+.step.done{color:var(--green)}
+.confirm-wrap{display:none;max-width:680px;margin:0 auto;padding:2rem 2rem 6rem;text-align:center}
+.confirm-box{border:.5px solid rgba(201,169,110,.3);padding:3rem 2rem}
+.confirm-icon{font-size:3rem;margin-bottom:1.5rem}
+.confirm-title{font-family:'Cinzel',serif;font-size:1.5rem;color:var(--gold);letter-spacing:.1em;margin-bottom:1rem}
+.confirm-body{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--smoke);line-height:1.9;margin-bottom:2rem}
+.ticket-stub{background:var(--deep);border:1px dashed rgba(201,169,110,.3);padding:2rem;margin:2rem 0;text-align:left}
+.stub-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:.5px dashed rgba(201,169,110,.2)}
+.stub-logo{font-family:'Cinzel',serif;font-size:14px;letter-spacing:.2em;color:var(--gold)}
+.stub-type{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.stub-row{display:flex;justify-content:space-between;font-size:12px;padding:.35rem 0;border-bottom:.5px solid rgba(201,169,110,.06)}
+.stub-row span:first-child{color:var(--muted)}
+.stub-row span:last-child{color:var(--smoke)}
+.stub-ref{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--gold);text-align:center;margin-top:1.2rem;letter-spacing:.15em}
+.email-preview{background:var(--surface);border:.5px solid var(--border);padding:2rem;margin-top:2rem;text-align:left}
+.email-preview h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.2em;color:var(--gold);margin-bottom:1.2rem;text-transform:uppercase}
+.email-subject{font-size:12px;color:var(--smoke);margin-bottom:1rem;padding-bottom:.8rem;border-bottom:.5px solid var(--border)}
+.email-body{font-size:12px;color:var(--muted);line-height:2}
+.email-body strong{color:var(--smoke);font-weight:400}
+.email-body em{color:var(--gold);font-style:italic}
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--surface);border:.5px solid var(--gold);padding:1rem 1.5rem;font-size:12px;color:var(--smoke);z-index:9999;opacity:0;transform:translateY(10px);transition:all .4s;pointer-events:none;max-width:320px}
+.toast.show{opacity:1;transform:translateY(0)}
+footer{background:var(--surface);border-top:.5px solid var(--border);padding:2rem 3rem;text-align:center}
+.footer-logo{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.2em;color:var(--gold);margin-bottom:.5rem}
+footer p{font-size:10px;color:var(--muted)}
+@media(max-width:768px){nav{padding:1.2rem 1.5rem}.ticket-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.payment-btns{grid-template-columns:1fr}.event-bar{flex-direction:column}.event-item{border-right:.5px solid var(--border)!important}.tickets-wrap,.checkout-wrap,.confirm-wrap{padding:1rem 1.5rem 4rem}}
+</style>
 </head>
 <body>
 
 <nav>
   <a href="index.html" class="nav-logo">House of Tarab</a>
-  <a href="index.html" class="nav-link">← Back to Site</a>
+  <a href="index.html" class="nav-back">← Back to Site</a>
 </nav>
 
-<section class="hero" style="padding-bottom: 2rem;">
+<section class="hero">
   <div class="hero-bg"></div>
-  <span class="hero-label">Secure Your Seat</span>
+  <span class="hero-label">The Debut Collection</span>
   <h1 class="hero-title">House of<span>Tarab</span></h1>
-  <p class="hero-subtitle">THE DEBUT COLLECTION</p>
-  <p class="hero-tagline">July 16, 2026 · Atlanta, Georgia</p>
-  <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--text-muted); margin-top: 1rem;">Please select one ticket tier to proceed.</p>
+  <p class="hero-sub">Fashion Show & Cocktail Reception — Get Your Tickets</p>
 </section>
 
-<div class="section">
-  <div class="tickets-container">
-    <div class="ticket-list">
-      <!-- GA Ticket -->
-      <div class="ticket-card">
-        <div class="ticket-header">
-          <div class="ticket-info">
-            <h3>General Admission</h3>
-            <p>Seating in the main gallery, cocktail reception included.</p>
-          </div>
-          <div class="ticket-price">From $10.00</div>
-        </div>
-        <div class="field" style="max-width: 200px;">
-          <label>Name Your Price ($10+)</label>
-          <input type="number" value="10" min="10" onchange="updateCustomPrice(this.value)">
-        </div>
-        <div class="field" style="max-width: 200px; margin-top: 0.5rem;">
-          <label>Optional Donation ($)</label>
-          <input type="number" id="donation" value="0" min="0" placeholder="0" onchange="updateSummary()">
-        </div>
-        <div class="ticket-controls">
-          <div class="qty-selector">
-            <button class="qty-btn" onclick="updateTicketQty('ga', -1)">-</button>
-            <span class="qty-num" id="qty-ga">0</span>
-            <button class="qty-btn" onclick="updateTicketQty('ga', 1)">+</button>
-          </div>
-        </div>
-      </div>
+<div class="event-bar">
+  <div class="event-item"><span class="event-lbl">Date</span><span class="event-val">Thursday<br>July 16, 2026</span></div>
+  <div class="event-item"><span class="event-lbl">Doors</span><span class="event-val">7:00 PM</span></div>
+  <div class="event-item"><span class="event-lbl">Show</span><span class="event-val">7:30 PM</span></div>
+  <div class="event-item"><span class="event-lbl">Reception</span><span class="event-val">8:00 PM</span></div>
+  <div class="event-item"><span class="event-lbl">Location</span><span class="event-val">1235 Chattahoochee Ave NW<br>Atlanta, Georgia 30318</span></div>
+  <div class="event-item"><span class="event-lbl">Dress Code</span><span class="event-val">Smart Creative</span></div>
+</div>
 
-      <!-- Press Basic -->
-      <div class="ticket-card">
-        <div class="ticket-header">
-          <div class="ticket-info">
-            <h3>Press Basic</h3>
-            <p>Reserved media seating, digital press kit.</p>
-          </div>
-          <div class="ticket-price">$200.00</div>
-        </div>
-        <div class="ticket-controls">
-          <div class="qty-selector">
-            <button class="qty-btn" onclick="updateTicketQty('press-basic', -1)">-</button>
-            <span class="qty-num" id="qty-press-basic">0</span>
-            <button class="qty-btn" onclick="updateTicketQty('press-basic', 1)">+</button>
-          </div>
-          <label class="footage-discount">
-            <input type="checkbox" id="discount-press-basic" onchange="toggleDiscount('press-basic')">
-            Footage discount (-$40)
-          </label>
-        </div>
-      </div>
+<!-- TICKET SELECTION -->
+<div class="tickets-wrap" id="ticket-section">
+  <h2 class="tickets-title">Select Your Tickets</h2>
+  <p class="tickets-sub">All tickets include admission to the fashion show and cocktail reception.<br>Press & media packages include coverage rights as described.</p>
 
-      <!-- Press Standard -->
-      <div class="ticket-card">
-        <div class="ticket-header">
-          <div class="ticket-info">
-            <h3>Press Standard</h3>
-            <p>Priority media seating, digital + physical press kit, early access.</p>
-          </div>
-          <div class="ticket-price">$350.00</div>
-        </div>
-        <div class="ticket-controls">
-          <div class="qty-selector">
-            <button class="qty-btn" onclick="updateTicketQty('press-std', -1)">-</button>
-            <span class="qty-num" id="qty-press-std">0</span>
-            <button class="qty-btn" onclick="updateTicketQty('press-std', 1)">+</button>
-          </div>
-          <label class="footage-discount">
-            <input type="checkbox" id="discount-press-std" onchange="toggleDiscount('press-std')">
-            Footage discount (-$70)
-          </label>
-        </div>
+  <div class="ticket-grid">
+    <div class="ticket-card" onclick="selectTicket(this,'General Admission','10','general')">
+      <div class="ticket-header">
+        <p class="ticket-tier">General</p>
+        <p class="ticket-name">General Admission</p>
+        <p class="ticket-price">$10 <span style="font-size:1rem">minimum</span></p>
+        <p class="ticket-price-note">+ optional donation to support the production team</p>
       </div>
-
-      <!-- Press Premium -->
-      <div class="ticket-card">
-        <div class="ticket-header">
-          <div class="ticket-info">
-            <h3>Press Premium</h3>
-            <p>Front row media seating, full press kit, backstage interview access.</p>
-          </div>
-          <div class="ticket-price">$500.00</div>
-        </div>
-        <div class="ticket-controls">
-          <div class="qty-selector">
-            <button class="qty-btn" onclick="updateTicketQty('press-prem', -1)">-</button>
-            <span class="qty-num" id="qty-press-prem">0</span>
-            <button class="qty-btn" onclick="updateTicketQty('press-prem', 1)">+</button>
-          </div>
-          <label class="footage-discount">
-            <input type="checkbox" id="discount-press-prem" onchange="toggleDiscount('press-prem')">
-            Footage discount (-$100)
-          </label>
-        </div>
+      <div class="ticket-body">
+        <p class="ticket-feature">Admission to the full fashion show</p>
+        <p class="ticket-feature">Access to the cocktail reception</p>
+        <p class="ticket-feature">Option to donate more to support the team</p>
+        <p class="ticket-feature">General seating</p>
       </div>
     </div>
+    <div class="ticket-card" onclick="selectTicket(this,'Press — Basic','200','press-basic')">
+      <div class="ticket-header">
+        <p class="ticket-tier">Press & Media</p>
+        <p class="ticket-name">Press — Basic</p>
+        <p class="ticket-price">$200</p>
+        <p class="ticket-disc">$160 with footage agreement (20% off)</p>
+      </div>
+      <div class="ticket-body">
+        <p class="ticket-feature">Social media coverage of the show</p>
+        <p class="ticket-feature">Posts about the collection & event</p>
+        <p class="ticket-feature">No interviews permitted</p>
+        <p class="ticket-feature">Must credit @houseoftarab</p>
+        <p class="ticket-feature">General seating</p>
+      </div>
+    </div>
+    <div class="ticket-card" onclick="selectTicket(this,'Press — Standard','350','press-standard')">
+      <div class="ticket-header">
+        <p class="ticket-tier">Press & Media</p>
+        <p class="ticket-name">Press — Standard</p>
+        <p class="ticket-price">$350</p>
+        <p class="ticket-disc">$280 with footage agreement (20% off)</p>
+      </div>
+      <div class="ticket-body">
+        <p class="ticket-feature">Social media coverage</p>
+        <p class="ticket-feature">One editorial feature (print or digital)</p>
+        <p class="ticket-feature">No interviews permitted</p>
+        <p class="ticket-feature">Must credit @houseoftarab</p>
+        <p class="ticket-feature">Front row seating</p>
+      </div>
+    </div>
+    <div class="ticket-card" onclick="selectTicket(this,'Press — Premium','500','press-premium')">
+      <div class="ticket-header">
+        <p class="ticket-tier">Press & Media</p>
+        <p class="ticket-name">Press — Premium</p>
+        <p class="ticket-price">$500</p>
+        <p class="ticket-disc">$400 with footage agreement (20% off)</p>
+      </div>
+      <div class="ticket-body">
+        <p class="ticket-feature">Social media + editorial coverage</p>
+        <p class="ticket-feature">Exclusive one-on-one interview with Joy</p>
+        <p class="ticket-feature">Full backstage access</p>
+        <p class="ticket-feature">First priority for post-show features</p>
+        <p class="ticket-feature">Must credit @houseoftarab</p>
+        <p class="ticket-feature">Front row + backstage</p>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <aside class="summary-panel">
-      <h2 class="summary-title">Order Summary</h2>
-      <div id="summary-items" class="summary-items">
-        <!-- Dynamic content -->
-        <p style="text-align: center; color: var(--text-muted); font-size: 12px;">No tickets selected</p>
-      </div>
-      <div class="summary-total">
-        <span>Total</span>
-        <span id="summary-total-val">$0.00</span>
-      </div>
-    </aside>
+<!-- CHECKOUT FORM -->
+<div class="checkout-wrap" id="checkout-section" style="display:none">
+  <div class="step-indicator">
+    <div class="step done">1. Select Ticket</div>
+    <div class="step active">2. Your Details</div>
+    <div class="step">3. Payment</div>
   </div>
 
-  <form id="checkout-form" class="checkout-form" onsubmit="handleCheckout(event)">
-    <h2 class="summary-title" style="text-align: left; margin-bottom: 1.5rem; border: none;">Guest Information</h2>
-    <div class="form-grid">
-      <div class="field"><label>First Name</label><input type="text" id="f-name" required></div>
-      <div class="field"><label>Last Name</label><input type="text" id="l-name" required></div>
+  <div class="checkout-box">
+    <div class="checkout-header">
+      <h3>Your Details</h3>
     </div>
-    <div class="form-grid">
-      <div class="field"><label>Email Address</label><input type="email" id="email" required></div>
-      <div class="field"><label>Phone Number</label><input type="tel" id="phone" required></div>
+    <div class="checkout-body">
+      <div class="form-grid">
+        <div class="field"><label>First Name</label><input type="text" id="c-fname" placeholder="Your first name" required /></div>
+        <div class="field"><label>Last Name</label><input type="text" id="c-lname" placeholder="Your last name" required /></div>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Email Address</label><input type="email" id="c-email" placeholder="hello@youremail.com" required /></div>
+        <div class="field"><label>Phone Number</label><input type="tel" id="c-phone" placeholder="+1 (000) 000-0000" required /></div>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Party Size</label>
+          <select id="c-guests">
+            <option value="1">Just me (1 guest)</option>
+            <option value="2">Myself + 1 (2 guests)</option>
+            <option value="3">Myself + 2 (3 guests)</option>
+            <option value="4">Myself + 3 (4 guests)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>How Did You Hear About the Show?</label>
+          <select id="c-source">
+            <option value="" disabled selected>Select one</option>
+            <option>Instagram</option>
+            <option>Email invitation</option>
+            <option>Personal invitation from Joy</option>
+            <option>Friend or colleague</option>
+            <option>Eventbrite</option>
+            <option>Facebook Event</option>
+            <option>Do404 or local listing</option>
+            <option>Press / media</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="donation-field" class="form-grid single" style="display:none">
+        <div class="field">
+          <label>Additional Donation (optional)</label>
+          <input type="number" id="c-donation" min="0" placeholder="Enter any amount above $10 to support the production team" />
+          <span class="donation-note">Every contribution goes directly toward bringing this show to life. Thank you for your generosity.</span>
+        </div>
+      </div>
+
+      <div id="footage-field" class="form-grid single" style="display:none">
+        <div class="field">
+          <label>Footage Agreement</label>
+          <select id="c-footage">
+            <option value="no">No footage agreement — full price applies</option>
+            <option value="yes">Yes — I agree to submit clean, watermark-free footage within 48 hours (20% discount applied)</option>
+          </select>
+          <span class="donation-note">By selecting yes, you agree to provide all footage to the House of Tarab show coordinator in full resolution without visible watermarks within 48 hours of the event.</span>
+        </div>
+      </div>
+
+      <div class="order-summary" id="order-summary">
+        <h4>Order Summary</h4>
+        <div class="order-row"><span>Ticket Type</span><span id="sum-type">—</span></div>
+        <div class="order-row"><span>Party Size</span><span id="sum-guests">1 guest</span></div>
+        <div class="order-row" id="sum-donation-row" style="display:none"><span>Donation</span><span id="sum-donation">—</span></div>
+        <div class="order-row" id="sum-discount-row" style="display:none"><span>Footage Discount (20%)</span><span id="sum-discount" style="color:var(--green)">—</span></div>
+        <div class="order-row"><span>Total</span><span id="sum-total">—</span></div>
+      </div>
+
+      <div class="payment-btns">
+        <button class="pay-btn stripe-btn" onclick="proceedToStripe()">💳 Pay with Card</button>
+        <button class="pay-btn paypal-btn" onclick="proceedToPayPal()">🅿 PayPal</button>
+      </div>
+      <p class="secure-note">🔒 Secure payment via Stripe or PayPal. Your information is protected.</p>
+      <p style="text-align:center;margin-top:1rem;"><button onclick="goBack()" style="background:transparent;border:none;color:var(--muted);font-size:11px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;">← Change Ticket</button></p>
     </div>
-    <div class="form-grid single">
-      <div class="field">
-        <label>How did you hear about us?</label>
-        <select id="source" required>
-          <option value="" disabled selected>Select an option</option>
-          <option>Instagram</option>
-          <option>Email</option>
-          <option>Personal Invitation</option>
-          <option>Friend</option>
-          <option>Press</option>
-          <option>Other</option>
-        </select>
+  </div>
+</div>
+
+<!-- CONFIRMATION -->
+<div class="confirm-wrap" id="confirm-section">
+  <div class="confirm-box">
+    <div class="confirm-icon">✨</div>
+    <h3 class="confirm-title">You're On the List</h3>
+    <p class="confirm-body">Your ticket has been confirmed and a copy has been sent to your email. Joy cannot wait to have you in the room.</p>
+
+    <div class="ticket-stub" id="ticket-stub">
+      <div class="stub-header">
+        <div>
+          <div class="stub-logo">House of Tarab</div>
+          <div class="stub-type">The Debut Collection — Official Ticket</div>
+        </div>
+        <div style="text-align:right">
+          <div class="stub-type">Thursday, July 16, 2026</div>
+          <div style="font-size:11px;color:var(--gold);margin-top:.3rem">Atlanta, Georgia</div>
+        </div>
+      </div>
+      <div class="stub-row"><span>Guest Name</span><span id="stub-name">—</span></div>
+      <div class="stub-row"><span>Ticket Type</span><span id="stub-type">—</span></div>
+      <div class="stub-row"><span>Party Size</span><span id="stub-guests">—</span></div>
+      <div class="stub-row"><span>Doors Open</span><span>7:00 PM</span></div>
+      <div class="stub-row"><span>Show Begins</span><span>7:30 PM</span></div>
+      <div class="stub-row"><span>Dress Code</span><span>Smart Creative</span></div>
+      <div class="stub-row"><span>Venue</span><span>1235 Chattahoochee Ave NW, Atlanta, GA 30318</span></div>
+      <div class="stub-ref" id="stub-ref">HOT-000000</div>
+    </div>
+
+    <div class="email-preview">
+      <h4>Email Sent to Your Inbox</h4>
+      <div class="email-subject"><strong>Subject:</strong> Your House of Tarab Ticket — Thursday, July 16, 2026</div>
+      <div class="email-body" id="email-preview-body">
+        Loading email preview...
       </div>
     </div>
-    <div class="form-grid single">
-      <div class="field"><label>Note (Optional)</label><textarea id="note"></textarea></div>
-    </div>
-    <div style="text-align: center; margin-top: 2rem;">
-      <button type="submit" class="btn-primary">Pay with Stripe</button>
-    </div>
-  </form>
 
-  <div id="success-panel" class="success-panel">
-    <h3>Purchase Successful</h3>
-    <p>Thank you for securing your seat at the House of Tarab debut show. You will receive a confirmation email shortly with your digital tickets.</p>
-    <div style="margin-top: 2rem;">
-      <a href="index.html" class="nav-link">← Back to Home</a>
-    </div>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;color:var(--gold);margin-top:2rem;">"For the rooms that remember you."</p>
   </div>
 </div>
 
 <footer>
   <p class="footer-logo">House of Tarab — Founded by Joy</p>
-  <div style="margin: 1rem 0; display: flex; justify-content: center; gap: 1.5rem;">
-    <a href="#" class="nav-link" style="font-size: 10px;">Instagram</a>
-    <a href="#" class="nav-link" style="font-size: 10px;">Twitter</a>
-    <a href="#" class="nav-link" style="font-size: 10px;">TikTok</a>
-  </div>
-  <p>hello@houseoftarab.com · Atlanta, Georgia</p>
-  <p style="margin-top:0.5rem;font-style:italic;color:var(--gold);font-family:'Cormorant Garamond',serif;">For the rooms that remember you.</p>
+  <p>hello@houseoftarab.com · houseoftarab.com · Atlanta, Georgia</p>
+  <p style="margin-top:.5rem;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);">For the rooms that remember you.</p>
 </footer>
 
-<script src="script.js"></script>
+<div class="toast" id="toast"></div>
+
+<script>
+let selectedTicket = null;
+let selectedPrice = 0;
+let ticketType = '';
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+function selectTicket(card, name, price, type) {
+  document.querySelectorAll('.ticket-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedTicket = name;
+  selectedPrice = parseInt(price);
+  ticketType = type;
+
+  document.getElementById('sum-type').textContent = name;
+  document.getElementById('sum-total').textContent = '$' + price;
+
+  document.getElementById('donation-field').style.display = type === 'general' ? 'block' : 'none';
+  document.getElementById('footage-field').style.display = type !== 'general' ? 'block' : 'none';
+  document.getElementById('sum-donation-row').style.display = 'none';
+  document.getElementById('sum-discount-row').style.display = 'none';
+
+  document.getElementById('ticket-section').style.display = 'none';
+  document.getElementById('checkout-section').style.display = 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  updateTotal();
+}
+
+function goBack() {
+  document.getElementById('checkout-section').style.display = 'none';
+  document.getElementById('ticket-section').style.display = 'block';
+  window.scrollTo({top: 300, behavior: 'smooth'});
+}
+
+function updateTotal() {
+  const guests = parseInt(document.getElementById('c-guests').value) || 1;
+  document.getElementById('sum-guests').textContent = guests + (guests === 1 ? ' guest' : ' guests');
+  let total = selectedPrice;
+
+  if (ticketType === 'general') {
+    const donation = parseFloat(document.getElementById('c-donation')?.value) || 0;
+    if (donation > 0) {
+      document.getElementById('sum-donation-row').style.display = 'flex';
+      document.getElementById('sum-donation').textContent = '$' + donation.toFixed(2);
+      total += donation;
+    } else {
+      document.getElementById('sum-donation-row').style.display = 'none';
+    }
+    total = total * guests;
+  } else {
+    const footage = document.getElementById('c-footage')?.value;
+    if (footage === 'yes') {
+      const discount = selectedPrice * 0.2;
+      document.getElementById('sum-discount-row').style.display = 'flex';
+      document.getElementById('sum-discount').textContent = '-$' + discount.toFixed(2);
+      total = total * 0.8;
+    } else {
+      document.getElementById('sum-discount-row').style.display = 'none';
+    }
+  }
+  document.getElementById('sum-total').textContent = '$' + total.toFixed(2);
+  return total;
+}
+
+document.addEventListener('change', function(e) {
+  if (['c-guests','c-donation','c-footage'].includes(e.target.id)) updateTotal();
+});
+
+function validateForm() {
+  const fname = document.getElementById('c-fname').value.trim();
+  const lname = document.getElementById('c-lname').value.trim();
+  const email = document.getElementById('c-email').value.trim();
+  const phone = document.getElementById('c-phone').value.trim();
+  const source = document.getElementById('c-source').value;
+  if (!fname || !lname) { showToast('Please enter your full name.'); return false; }
+  if (!email || !email.includes('@')) { showToast('Please enter a valid email address.'); return false; }
+  if (!phone) { showToast('Please enter your phone number.'); return false; }
+  if (!source) { showToast('Please let us know how you heard about the show.'); return false; }
+  return true;
+}
+
+async function proceedToStripe() {
+  if (!validateForm()) return;
+  const total = updateTotal();
+  const guests = document.getElementById('c-guests').value;
+  const footage = document.getElementById('c-footage')?.value === 'yes';
+  const donation = parseFloat(document.getElementById('c-donation')?.value) || 0;
+  const payload = {
+    firstName: document.getElementById('c-fname').value.trim(),
+    lastName: document.getElementById('c-lname').value.trim(),
+    email: document.getElementById('c-email').value.trim(),
+    phone: document.getElementById('c-phone').value.trim(),
+    howHeard: document.getElementById('c-source').value,
+    ticketType: selectedTicket,
+    quantity: parseInt(guests),
+    donation: donation,
+    footageDiscount: footage,
+    ticketPrice: total / parseInt(guests),
+    note: ''
+  };
+  try {
+    const response = await fetch('/api/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await response.json();
+    if (data.url) window.location.href = data.url;
+    else showToast('Error: ' + (data.error || 'Could not create checkout'));
+  } catch (error) {
+    showToast('Could not connect to the server.');
+  }
+}
+
+function proceedToPayPal() {
+  if (!validateForm()) return;
+  const total = updateTotal();
+  const guests = document.getElementById('c-guests').value;
+  const fname = document.getElementById('c-fname').value.trim();
+  const lname = document.getElementById('c-lname').value.trim();
+  const email = document.getElementById('c-email').value.trim();
+  const ref = 'HOT-' + Date.now().toString().slice(-6);
+
+  const rsvps = JSON.parse(localStorage.getItem('hot_rsvps') || '[]');
+  rsvps.push({ ref, name: fname+' '+lname, email, phone: document.getElementById('c-phone').value, ticket: selectedTicket, guests, total, source: document.getElementById('c-source').value, timestamp: new Date().toISOString() });
+  localStorage.setItem('hot_rsvps', JSON.stringify(rsvps));
+
+  const paypalEmail = 'hello@houseoftarab.com';
+  const paypalURL = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${encodeURIComponent(paypalEmail)}&item_name=${encodeURIComponent('House of Tarab - '+selectedTicket)}&amount=${total.toFixed(2)}&currency_code=USD&return=${encodeURIComponent(window.location.href+'?confirmed=true&ref='+ref+'&name='+encodeURIComponent(fname+' '+lname)+'&ticket='+encodeURIComponent(selectedTicket)+'&guests='+guests+'&email='+encodeURIComponent(email))}&cancel_return=${encodeURIComponent(window.location.href)}`;
+  window.location.href = paypalURL;
+}
+
+function showConfirmation(ref, name, ticket, guests, email, total) {
+  document.getElementById('checkout-section').style.display = 'none';
+  document.getElementById('confirm-section').style.display = 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  document.getElementById('stub-name').textContent = name;
+  document.getElementById('stub-type').textContent = ticket;
+  document.getElementById('stub-guests').textContent = guests + (guests == 1 ? ' guest' : ' guests');
+  document.getElementById('stub-ref').textContent = ref;
+
+  const emailBody = `
+    <p><strong>Dear ${name},</strong></p><br>
+    <p>Thank you. Truly.</p><br>
+    <p>From the bottom of my heart — thank you for securing your place at the House of Tarab debut show. Knowing that you will be in the room on July 16th means more than words can express. This collection has been years in the making, and I cannot wait to share it with you.</p><br>
+    <p>Below is everything you need for the evening. Please keep this for your records.</p><br>
+    <p><strong>YOUR TICKET</strong><br>
+    Reference: <em>${ref}</em><br>
+    Ticket Type: <em>${ticket}</em><br>
+    Party Size: <em>${guests} guest${guests > 1 ? 's' : ''}</em><br>
+    Amount Paid: <em>$${total.toFixed(2)}</em></p><br>
+    <p><strong>EVENT DETAILS</strong><br>
+    Thursday, July 16, 2026<br>
+    Doors open: 7:00 PM<br>
+    Show begins: 7:30 PM<br>
+    Cocktail reception: 8:00 PM<br>
+            1235 Chattahoochee Ave NW, Atlanta, GA 30318</p><br>
+    <p><strong>DRESS CODE</strong><br>
+    Smart Creative — Fashion Forward. Think elevated, expressive, and intentional. This is a runway show — dress accordingly.</p><br>
+    <p><strong>WHAT TO EXPECT</strong><br>
+    The evening begins with a full runway presentation of the House of Tarab debut collection — elevated workwear, formal wear, and floor-length evening gowns, all made to order. Following the show, you are invited to a cocktail reception where you can view the collection up close, meet me, and learn about the commission process.</p><br>
+    <p><strong>WITH GRATITUDE</strong><br>
+    <em>I have been dreaming of this moment for a long time. The fact that you are going to be in the room when it is revealed for the first time — I am deeply grateful. Come ready to feel something. Come ready to celebrate.</em></p><br>
+    <p>With love and anticipation,</p>
+    <p><strong>Joy</strong><br>
+    Founder, House of Tarab</p><br>
+    <p><em>"For the rooms that remember you."</em></p>
+  `;
+  document.getElementById('email-preview-body').innerHTML = emailBody;
+  showToast('Ticket confirmed! Check your email at ' + email);
+}
+
+window.addEventListener('load', function() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('confirmed') === 'true') {
+    showConfirmation(
+      params.get('ref') || 'HOT-000000',
+      params.get('name') || 'Guest',
+      params.get('ticket') || 'General Admission',
+      params.get('guests') || '1',
+      params.get('email') || '',
+      10
+    );
+  }
+});
+</script>
 </body>
 </html>
