@@ -118,74 +118,36 @@ footer p{font-size:10px;color:var(--muted)}
   <div class="event-item"><span class="event-lbl">Doors</span><span class="event-val">7:00 PM</span></div>
   <div class="event-item"><span class="event-lbl">Show</span><span class="event-val">7:30 PM</span></div>
   <div class="event-item"><span class="event-lbl">Reception</span><span class="event-val">8:00 PM</span></div>
-  <div class="event-item"><span class="event-lbl">Location</span><span class="event-val">1235 Chattahoochee Ave NW<br>Atlanta, Georgia 30318</span></div>
+  <div class="event-item"><span class="event-lbl">Location</span><span class="event-val">Atlanta, Georgia</span></div>
   <div class="event-item"><span class="event-lbl">Dress Code</span><span class="event-val">Smart Creative</span></div>
 </div>
 
 <!-- TICKET SELECTION -->
 <div class="tickets-wrap" id="ticket-section">
-  <h2 class="tickets-title">Select Your Tickets</h2>
-  <p class="tickets-sub">All tickets include admission to the fashion show and cocktail reception.<br>Press & media packages include coverage rights as described.</p>
+  <h2 class="tickets-title">A New Direction</h2>
+  <p class="tickets-sub" style="max-width:700px;margin:0 auto 2rem;line-height:1.9;">
+    House of Tarab is proud to announce a refined new direction — one rooted in elegance, 
+    intention, and lasting quality. We are moving away from fast fashion and toward a more 
+    <em>classic, sophisticated</em> approach: made-to-order garments crafted for the individual, 
+    using finer materials and elevated construction.
+    <br><br>
+    This debut collection is the first expression of that vision. Every ticket you purchase 
+    helps us take this next step — and we are grateful to have you with us.
+  </p>
+  <p class="tickets-sub" style="text-align:center;margin-bottom:3rem;">All tickets include admission to the fashion show and cocktail reception.</p>
 
-  <div class="ticket-grid">
+  <div class="ticket-grid" style="grid-template-columns:1fr;max-width:500px;margin:0 auto;">
     <div class="ticket-card" onclick="selectTicket(this,'General Admission','10','general')">
       <div class="ticket-header">
-        <p class="ticket-tier">General</p>
+        <p class="ticket-tier">General Admission</p>
         <p class="ticket-name">General Admission</p>
         <p class="ticket-price">$10 <span style="font-size:1rem">minimum</span></p>
-        <p class="ticket-price-note">+ optional donation to support the production team</p>
+        <p class="ticket-price-note">+ optional donation to support the future of House of Tarab</p>
       </div>
       <div class="ticket-body">
         <p class="ticket-feature">Admission to the full fashion show</p>
         <p class="ticket-feature">Access to the cocktail reception</p>
-        <p class="ticket-feature">Option to donate more to support the team</p>
         <p class="ticket-feature">General seating</p>
-      </div>
-    </div>
-    <div class="ticket-card" onclick="selectTicket(this,'Press — Basic','200','press-basic')">
-      <div class="ticket-header">
-        <p class="ticket-tier">Press & Media</p>
-        <p class="ticket-name">Press — Basic</p>
-        <p class="ticket-price">$200</p>
-        <p class="ticket-disc">$160 with footage agreement (20% off)</p>
-      </div>
-      <div class="ticket-body">
-        <p class="ticket-feature">Social media coverage of the show</p>
-        <p class="ticket-feature">Posts about the collection & event</p>
-        <p class="ticket-feature">No interviews permitted</p>
-        <p class="ticket-feature">Must credit @houseoftarab</p>
-        <p class="ticket-feature">General seating</p>
-      </div>
-    </div>
-    <div class="ticket-card" onclick="selectTicket(this,'Press — Standard','350','press-standard')">
-      <div class="ticket-header">
-        <p class="ticket-tier">Press & Media</p>
-        <p class="ticket-name">Press — Standard</p>
-        <p class="ticket-price">$350</p>
-        <p class="ticket-disc">$280 with footage agreement (20% off)</p>
-      </div>
-      <div class="ticket-body">
-        <p class="ticket-feature">Social media coverage</p>
-        <p class="ticket-feature">One editorial feature (print or digital)</p>
-        <p class="ticket-feature">No interviews permitted</p>
-        <p class="ticket-feature">Must credit @houseoftarab</p>
-        <p class="ticket-feature">Front row seating</p>
-      </div>
-    </div>
-    <div class="ticket-card" onclick="selectTicket(this,'Press — Premium','500','press-premium')">
-      <div class="ticket-header">
-        <p class="ticket-tier">Press & Media</p>
-        <p class="ticket-name">Press — Premium</p>
-        <p class="ticket-price">$500</p>
-        <p class="ticket-disc">$400 with footage agreement (20% off)</p>
-      </div>
-      <div class="ticket-body">
-        <p class="ticket-feature">Social media + editorial coverage</p>
-        <p class="ticket-feature">Exclusive one-on-one interview with Joy</p>
-        <p class="ticket-feature">Full backstage access</p>
-        <p class="ticket-feature">First priority for post-show features</p>
-        <p class="ticket-feature">Must credit @houseoftarab</p>
-        <p class="ticket-feature">Front row + backstage</p>
       </div>
     </div>
   </div>
@@ -242,8 +204,8 @@ footer p{font-size:10px;color:var(--muted)}
       <div id="donation-field" class="form-grid single" style="display:none">
         <div class="field">
           <label>Additional Donation (optional)</label>
-          <input type="number" id="c-donation" min="0" placeholder="Enter any amount above $10 to support the production team" />
-          <span class="donation-note">Every contribution goes directly toward bringing this show to life. Thank you for your generosity.</span>
+          <input type="number" id="c-donation" min="0" placeholder="Enter any amount" />
+          <span class="donation-note">Every contribution goes directly toward expanding House of Tarab — from sourcing finer materials and elevating craftsmanship, to creating a more personalized experience for every client who commissions a garment. Your support helps us invest in better fabrics, skilled artisans, and the kind of detail that makes each piece truly one of a kind. Thank you for believing in what we are building.</span>
         </div>
       </div>
 
@@ -301,7 +263,7 @@ footer p{font-size:10px;color:var(--muted)}
       <div class="stub-row"><span>Doors Open</span><span>7:00 PM</span></div>
       <div class="stub-row"><span>Show Begins</span><span>7:30 PM</span></div>
       <div class="stub-row"><span>Dress Code</span><span>Smart Creative</span></div>
-      <div class="stub-row"><span>Venue</span><span>1235 Chattahoochee Ave NW, Atlanta, GA 30318</span></div>
+      <div class="stub-row"><span>Venue</span><span>Atlanta, Georgia (address provided in email)</span></div>
       <div class="stub-ref" id="stub-ref">HOT-000000</div>
     </div>
 
@@ -487,7 +449,7 @@ function showConfirmation(ref, name, ticket, guests, email, total) {
     Show begins: 7:30 PM<br>
     Cocktail reception: 8:00 PM<br>
             1235 Chattahoochee Ave NW, Atlanta, GA 30318</p><br>
-    <p><strong>DRESS CODE</strong><br>
+            <p><strong>DRESS CODE</strong><br>
     Smart Creative — Fashion Forward. Think elevated, expressive, and intentional. This is a runway show — dress accordingly.</p><br>
     <p><strong>WHAT TO EXPECT</strong><br>
     The evening begins with a full runway presentation of the House of Tarab debut collection — elevated workwear, formal wear, and floor-length evening gowns, all made to order. Following the show, you are invited to a cocktail reception where you can view the collection up close, meet me, and learn about the commission process.</p><br>
