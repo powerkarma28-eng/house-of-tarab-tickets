@@ -281,8 +281,11 @@ footer p{font-size:10px;color:var(--muted)}
 
 <footer>
   <p class="footer-logo">House of Tarab — Founded by Joy</p>
-  <p>hello@houseoftarab.com · houseoftarab.com · Atlanta, Georgia</p>
-  <p style="margin-top:.5rem;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);">For the rooms that remember you.</p>
+  <div style="margin:1rem 0;display:flex;justify-content:center;gap:1.5rem;">
+    <a href="https://instagram.com/houseoftarab_" style="font-size:10px;color:var(--muted);text-decoration:none;letter-spacing:.18em;text-transform:uppercase;">Instagram</a>
+  </div>
+  <p>hello@houseoftarab.net · Atlanta, Georgia</p>
+  <p style="margin-top:.5rem;font-style:italic;color:var(--gold);font-family:'Cormorant Garamond',serif;">For the rooms that remember you.</p>
 </footer>
 
 <div class="toast" id="toast"></div>
@@ -418,7 +421,7 @@ function proceedToPayPal() {
   rsvps.push({ ref, name: fname+' '+lname, email, phone: document.getElementById('c-phone').value, ticket: selectedTicket, guests, total, source: document.getElementById('c-source').value, timestamp: new Date().toISOString() });
   localStorage.setItem('hot_rsvps', JSON.stringify(rsvps));
 
-  const paypalEmail = 'hello@houseoftarab.com';
+  const paypalEmail = 'hello@houseoftarab.net'; // ← Change this to your PayPal business email
   const paypalURL = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${encodeURIComponent(paypalEmail)}&item_name=${encodeURIComponent('House of Tarab - '+selectedTicket)}&amount=${total.toFixed(2)}&currency_code=USD&return=${encodeURIComponent(window.location.href+'?confirmed=true&ref='+ref+'&name='+encodeURIComponent(fname+' '+lname)+'&ticket='+encodeURIComponent(selectedTicket)+'&guests='+guests+'&email='+encodeURIComponent(email))}&cancel_return=${encodeURIComponent(window.location.href)}`;
   window.location.href = paypalURL;
 }
