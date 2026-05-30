@@ -451,6 +451,67 @@ footer p {
   line-height: 1.8;
 }
 
+/* About Section */
+.about-section {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 2rem;
+}
+.about-block {
+  margin-bottom: 2.5rem;
+}
+.about-heading {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  color: var(--smoke);
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  margin-bottom: 0.8rem;
+}
+.about-dateline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+.about-subhead {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+.about-body {
+  font-size: 13px;
+  color: var(--smoke);
+  line-height: 1.9;
+  font-weight: 200;
+  letter-spacing: 0.03em;
+}
+.about-label {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+}
+.about-details {
+  border: 0.5px solid var(--border);
+  padding: 1.5rem;
+  margin: 2.5rem 0;
+  background: rgba(255,255,255,0.02);
+}
+.about-details p {
+  font-size: 12px;
+  color: var(--smoke);
+  line-height: 1.8;
+}
+.about-details strong {
+  color: var(--gold);
+  font-weight: 400;
+}
+
 @media (max-width: 900px) {
   .tickets-container {
     grid-template-columns: 1fr;
