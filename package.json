@@ -1,0 +1,22 @@
+{
+  "name": "house-of-tarab-backend",
+  "version": "1.0.0",
+  "description": "Backend API for House of Tarab — waitlist signup and ticket checkout",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [],
+  "author": "House of Tarab",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "better-sqlite3": "^12.10.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "helmet": "^8.2.0",
+    "stripe": "^22.2.0"
+  }
+}

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>House of Tarab — Coming Soon</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#C9A96E;--gold-light:#E8D5A3;--deep:#1C0F0A;--surface:#2E1A13;--smoke:#F5EDE4;--muted:#9A8070;--border:rgba(201,169,110,0.15)}
+html{height:100%}
+body{background:var(--deep);color:var(--smoke);font-family:'Jost',sans-serif;font-weight:200;letter-spacing:.04em;min-height:100vh;display:flex;flex-direction:column;align-items:center;overflow-x:hidden}
+
+/* Background glow */
+.bg{position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(201,169,110,0.07) 0%,transparent 70%),radial-gradient(ellipse 40% 80% at 20% 80%,rgba(201,169,110,0.04) 0%,transparent 60%);pointer-events:none}
+
+/* Border frame */
+.frame{position:fixed;inset:.6rem;top:3.8rem;border:.5px solid rgba(201,169,110,0.2);pointer-events:none}
+
+.wrap{max-width:740px;width:100%;padding:6rem 2rem 4rem;text-align:center;position:relative;z-index:1}
+
+/* Logo */
+.founded{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;margin-bottom:1.8rem;opacity:.8}
+.brand-house{font-family:'Cinzel',serif;font-size:clamp(1.8rem,5vw,3rem);font-weight:400;color:var(--smoke);letter-spacing:.15em;line-height:1}
+.brand-tarab{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(3.5rem,10vw,8rem);font-weight:300;color:var(--gold);letter-spacing:.08em;line-height:.9;margin-bottom:.3rem;animation:fadeUp 1.2s ease forwards}
+.tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,2vw,1.35rem);color:var(--smoke);opacity:.8;margin-bottom:.5rem}
+
+/* Divider */
+.rule{display:flex;align-items:center;gap:1.5rem;margin:2rem auto;max-width:400px}
+.rule-line{flex:1;height:.5px;background:linear-gradient(to right,transparent,rgba(201,169,110,.3),transparent)}
+.rule-dot{color:var(--gold);opacity:.5;font-size:14px}
+
+/* Coming soon label */
+.cs-label{font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:block}
+
+/* Countdown */
+.countdown{display:flex;justify-content:center;gap:1.5rem;margin:1.5rem 0 2.5rem;flex-wrap:wrap}
+.cd-block{text-align:center;min-width:70px}
+.cd-num{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,6vw,4rem);color:var(--gold);line-height:1;display:block}
+.cd-lbl{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-top:.3rem;display:block}
+.cd-sep{font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:rgba(201,169,110,.3);align-self:flex-start;padding-top:.3rem}
+
+/* Show date */
+.show-date{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,1.8vw,1.2rem);color:var(--muted);margin-bottom:2.5rem}
+.show-date strong{color:var(--smoke);font-style:normal}
+
+/* Joy's message text */
+.joy-message{background:var(--surface);border:.5px solid var(--border);border-left:2px solid var(--gold);padding:2rem;margin:0 auto 2.5rem;max-width:560px;text-align:left}
+.joy-message p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,1.8vw,1.2rem);color:var(--smoke);line-height:1.9;margin-bottom:1rem}
+.joy-message .sig{font-size:1rem;color:var(--gold);font-style:italic}
+
+/* Email signup */
+.signup-label{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;display:block}
+.signup-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.7}
+.signup-form{display:flex;max-width:460px;margin:0 auto 1rem}
+.signup-form input{flex:1;background:rgba(255,255,255,.03);border:.5px solid rgba(201,169,110,.25);border-right:none;color:var(--smoke);padding:.85rem 1.2rem;font-family:'Jost',sans-serif;font-size:12px;font-weight:200;letter-spacing:.08em;outline:none;transition:border-color .3s}
+.signup-form input:focus{border-color:var(--gold)}
+.signup-form input::placeholder{color:var(--muted)}
+.signup-form button{background:var(--gold);color:var(--deep);border:none;padding:.85rem 1.8rem;font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:background .3s;white-space:nowrap}
+.signup-form button:hover{background:var(--gold-light)}
+.signup-count{font-size:11px;color:var(--muted);letter-spacing:.08em}
+.signup-count span{color:var(--gold)}
+
+/* Success */
+.signup-success{display:none;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--smoke);padding:1rem;border:.5px solid rgba(201,169,110,.3);max-width:460px;margin:0 auto}
+
+/* Social links */
+.social{margin-top:2.5rem;display:flex;justify-content:center;gap:2rem;flex-wrap:wrap}
+.social a{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
+.social a:hover{color:var(--gold)}
+
+/* Show teaser */
+.show-teaser{margin:2rem auto 0;max-width:560px;background:var(--surface);border:.5px solid var(--border);padding:1.5rem}
+.show-teaser-label{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;display:block}
+.show-teaser p{font-size:12px;color:var(--muted);line-height:1.9}
+.show-teaser strong{color:var(--smoke);font-weight:400}
+
+/* Toast */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--surface);border:.5px solid var(--gold);padding:1rem 1.5rem;font-size:12px;color:var(--smoke);z-index:9999;opacity:0;transform:translateY(10px);transition:all .4s;pointer-events:none;max-width:300px}
+.toast.show{opacity:1;transform:translateY(0)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
+
+@media(max-width:600px){
+  .wrap{padding:3rem 1.5rem}
+  .countdown{gap:1rem}
+  .signup-form{flex-direction:column}
+  .signup-form input{border-right:.5px solid rgba(201,169,110,.25);border-bottom:none}
+  .signup-form button{border-top:none}
+}
+</style>
+</head>
+<body>
+
+<nav style="position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2.5rem;background:rgba(28,15,10,.92);backdrop-filter:blur(16px);border-bottom:.5px solid rgba(201,169,110,0.15)">
+  <a href="index.html" style="font-family:'Cinzel',serif;font-size:12px;letter-spacing:.22em;color:var(--gold);text-decoration:none;text-transform:uppercase">House of Tarab</a>
+  <div style="display:flex;gap:1.2rem">
+    <a href="index.html" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);text-decoration:none">Coming Soon</a>
+    <a href="tickets.html" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s">Get Tickets</a>
+    <a href="rsvp.html" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s">RSVP</a>
+  </div>
+</nav>
+
+<div class="bg"></div>
+<div class="frame"></div>
+
+<div class="wrap">
+
+  <!-- Brand -->
+  <p class="founded">Founded by Joy</p>
+  <p class="brand-house">HOUSE OF</p>
+  <h1 class="brand-tarab">Tarab</h1>
+
+  <div class="rule"><div class="rule-line"></div><div class="rule-dot">—</div><div class="rule-line"></div></div>
+
+  <p class="tagline">"For the rooms that remember you."</p>
+
+  <!-- Countdown -->
+  <div class="rule"><div class="rule-line"></div><div class="rule-dot">—</div><div class="rule-line"></div></div>
+  <span class="cs-label">The Debut Show — Counting Down</span>
+
+  <div class="countdown">
+    <div class="cd-block"><span class="cd-num" id="cd-days">--</span><span class="cd-lbl">Days</span></div>
+    <span class="cd-sep">·</span>
+    <div class="cd-block"><span class="cd-num" id="cd-hours">--</span><span class="cd-lbl">Hours</span></div>
+    <span class="cd-sep">·</span>
+    <div class="cd-block"><span class="cd-num" id="cd-mins">--</span><span class="cd-lbl">Minutes</span></div>
+    <span class="cd-sep">·</span>
+    <div class="cd-block"><span class="cd-num" id="cd-secs">--</span><span class="cd-lbl">Seconds</span></div>
+  </div>
+
+  <p class="show-date">
+    <strong>Thursday, July 16, 2026</strong> · Fashion Show & Cocktail Reception<br>
+    Atlanta, Georgia · Doors 7:00 PM
+  </p>
+
+  <!-- Joy's written message -->
+  <div class="joy-message">
+    <p>"Something I have been building quietly, carefully, and with everything I have — is almost ready to be seen.</p>
+    <p>House of Tarab is a fashion house built for the woman who understands that what she wears is not just clothing. It is presence. It is feeling. It is the reason the room remembers her.</p>
+    <p>The debut collection drops soon. Sign up below to be the first to know when the doors open — and to receive your invitation to the show."</p>
+    <p class="sig">— Joy, Founder</p>
+  </div>
+
+  <div class="rule"><div class="rule-line"></div><div class="rule-dot">—</div><div class="rule-line"></div></div>
+
+  <!-- Email signup -->
+  <span class="signup-label">Be First Through the Door</span>
+  <p class="signup-sub">Sign up to receive your exclusive invitation to the debut show,<br>early access to the collection, and the story behind House of Tarab.</p>
+
+  <div class="signup-form" id="signup-form">
+    <input type="email" id="signup-email" placeholder="Your email address" />
+    <button onclick="handleSignup()">Notify Me</button>
+  </div>
+  <div class="signup-success" id="signup-success">
+    You are on the list. Joy will be in touch soon. ✦
+  </div>
+  <p class="signup-count" id="signup-count"></p>
+
+  <!-- Show teaser -->
+  <div class="show-teaser">
+    <span class="show-teaser-label">The Debut Show</span>
+    <p>
+      <strong>Thursday, July 16, 2026</strong> · Atlanta, Georgia<br>
+      Fashion show + cocktail reception · Smart Creative dress code<br>
+      <strong>General admission from $10</strong> · Press & media packages available<br><br>
+      Tickets and full details coming soon at houseoftarab.net
+    </p>
+  </div>
+
+  <!-- Social -->
+  <div class="social">
+    <a href="https://instagram.com/houseoftarab" target="_blank">Instagram</a>
+    <a href="mailto:hello@houseoftarab.net">hello@houseoftarab.net</a>
+    <a href="https://www.facebook.com/houseoftarab" target="_blank">Facebook</a>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// Countdown to July 16, 2026 7:00 PM Atlanta time
+function updateCountdown() {
+  const show = new Date('2026-07-16T19:00:00-04:00');
+  const now = new Date();
+  const diff = show - now;
+  if (diff <= 0) {
+    document.getElementById('cd-days').textContent = '0';
+    document.getElementById('cd-hours').textContent = '00';
+    document.getElementById('cd-mins').textContent = '00';
+    document.getElementById('cd-secs').textContent = '00';
+    return;
+  }
+  const days  = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+  const mins  = Math.floor((diff % (1000*60*60)) / (1000*60));
+  const secs  = Math.floor((diff % (1000*60)) / 1000);
+  document.getElementById('cd-days').textContent  = days;
+  document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+  document.getElementById('cd-mins').textContent  = String(mins).padStart(2,'0');
+  document.getElementById('cd-secs').textContent  = String(secs).padStart(2,'0');
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// Email signup
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+async function handleSignup() {
+  const email = document.getElementById('signup-email').value.trim();
+  if (!email || !email.includes('@')) {
+    showToast('Please enter a valid email address.');
+    return;
+  }
+  try {
+    const response = await fetch('/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    const data = await response.json();
+    if (data.success) {
+      document.getElementById('signup-form').style.display = 'none';
+      document.getElementById('signup-success').style.display = 'block';
+      showToast('You are on the list. Welcome to the House.');
+    } else {
+      showToast(data.error || 'Something went wrong.');
+    }
+  } catch (error) {
+    // Fallback to localStorage
+    const list = JSON.parse(localStorage.getItem('hot_waitlist') || '[]');
+    if (list.includes(email)) {
+      showToast('You are already on the list!');
+      return;
+    }
+    list.push(email);
+    localStorage.setItem('hot_waitlist', JSON.stringify(list));
+    document.getElementById('signup-form').style.display = 'none';
+    document.getElementById('signup-success').style.display = 'block';
+    showToast('You are on the list. Welcome to the House.');
+  }
+}
+
+function updateCount() {
+  const list = JSON.parse(localStorage.getItem('hot_waitlist') || '[]');
+  const el = document.getElementById('signup-count');
+  if (list.length > 0) {
+    el.innerHTML = '<span>' + list.length + '</span> ' + (list.length === 1 ? 'person has' : 'people have') + ' joined the waitlist';
+  }
+}
+updateCount();
+</script>
+</body>
+</html>
