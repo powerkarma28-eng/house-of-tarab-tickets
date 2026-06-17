@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
+const { sendConfirmationEmail } = require('../email');
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 let stripe = null;
@@ -180,6 +181,24 @@ router.post('/stripe-webhook', express.raw({ type: 'application/json' }), async 
     if (ref) {
       db.updateOrderStatus(ref, 'completed');
       console.log(`Order ${ref} completed via Stripe`);
+
+      // Send confirmation email
+      const customerEmail = session.customer_email || session.metadata?.email;
+      const firstName = session.metadata?.firstName || 'Friend';
+      const ticketType = session.metadata?.ticketType || 'General Admission';
+      const quantity = parseInt(session.metadata?.quantity) || 1;
+      const totalCents = session.amount_total || 0;
+
+      if (customerEmail) {
+        sendConfirmationEmail({
+          email: customerEmail,
+          firstName,
+          ref,
+          ticketType,
+          quantity,
+          total: totalCents / 100,
+        });
+      }
     }
   }
 

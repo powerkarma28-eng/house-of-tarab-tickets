@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RSVP — House of Tarab Debut Show</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#C9A96E;--gold-light:#E8D5A3;--deep:#1C0F0A;--surface:#2E1A13;--smoke:#F5EDE4;--muted:#9A8070;--border:rgba(201,169,110,0.15)}
+html{height:100%}
+body{background:var(--deep);color:var(--smoke);font-family:'Jost',sans-serif;font-weight:200;letter-spacing:.04em;min-height:100vh}
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2.5rem;background:rgba(28,15,10,.92);backdrop-filter:blur(16px);border-bottom:.5px solid var(--border)}
+.nav-logo{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.22em;color:var(--gold);text-decoration:none;text-transform:uppercase}
+.nav-links{display:flex;gap:1.2rem}
+.nav-links a{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-links a.active{color:var(--gold)}
+.wrap{max-width:720px;margin:0 auto;padding:7rem 2rem 4rem}
+.bg{position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(201,169,110,0.07) 0%,transparent 70%);pointer-events:none}
+
+/* Invitation letter */
+.letter{background:var(--surface);border:.5px solid var(--border);border-left:2px solid var(--gold);padding:2.5rem 2.5rem 2rem;margin-bottom:2.5rem;position:relative}
+.letter h2{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--muted);font-weight:400;letter-spacing:.08em;margin-bottom:.5rem}
+.letter h1{font-family:'Cinzel',serif;font-size:clamp(1.2rem,2.5vw,1.5rem);color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:2rem}
+.letter .divider{height:1px;background:linear-gradient(to right,transparent,rgba(201,169,110,0.3),transparent);margin:1.5rem 0}
+.letter p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.95rem,1.6vw,1.1rem);line-height:1.9;margin-bottom:1.2rem;color:var(--smoke)}
+.letter strong{font-style:normal;font-weight:600;color:var(--gold)}
+.letter .details{background:var(--deep);border-left:3px solid var(--gold);padding:1.2rem 1.5rem;margin:1.5rem 0;font-size:clamp(.85rem,1.4vw,.95rem);line-height:1.9}
+.letter .details strong{color:var(--gold);display:block;margin-bottom:.3rem}
+.letter .sig{margin-top:2rem;color:var(--gold);font-size:1.05rem}
+.letter .sig strong{display:block;font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-top:.3rem}
+
+/* Form */
+.form-box{border:.5px solid var(--border);background:var(--surface)}
+.form-header{padding:1.5rem 2rem;border-bottom:.5px solid var(--border);background:var(--deep)}
+.form-header h3{font-family:'Cinzel',serif;font-size:13px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.form-body{padding:2rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.2rem}
+.form-grid.single{grid-template-columns:1fr}
+.field{display:flex;flex-direction:column;gap:.4rem}
+.field label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.field input,.field select,.field textarea{background:rgba(255,255,255,.03);border:.5px solid rgba(201,169,110,.25);color:var(--smoke);padding:.8rem 1rem;font-family:'Jost',sans-serif;font-size:13px;font-weight:200;outline:none;transition:border-color .3s;width:100%}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold)}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted)}
+.field textarea{resize:vertical;min-height:80px}
+.submit-btn{width:100%;background:var(--gold);color:var(--deep);border:none;padding:1.1rem;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:background .3s;margin-top:.5rem}
+.submit-btn:hover{background:var(--gold-light)}
+
+/* Thank you message */
+.thank-you{display:none;text-align:center;border:.5px solid var(--gold);padding:3rem 2rem;margin-top:2rem}
+.thank-you .icon{font-size:3rem;margin-bottom:1rem}
+.thank-you h3{font-family:'Cinzel',serif;font-size:1.3rem;color:var(--gold);letter-spacing:.1em;margin-bottom:1rem}
+.thank-you p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--smoke);line-height:1.8}
+
+/* Toast */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--surface);border:.5px solid var(--gold);padding:1rem 1.5rem;font-size:12px;color:var(--smoke);z-index:9999;opacity:0;transform:translateY(10px);transition:all .4s;pointer-events:none;max-width:300px}
+.toast.show{opacity:1;transform:translateY(0)}
+
+footer{background:var(--surface);border-top:.5px solid var(--border);padding:2rem 3rem;text-align:center;margin-top:4rem}
+footer p{font-size:10px;color:var(--muted);font-family:'Cormorant Garamond',serif;font-style:italic}
+footer .gold{color:var(--gold)}
+
+@media(max-width:600px){.nav-links{gap:.8rem}.wrap{padding:5rem 1.5rem 3rem}.letter{padding:1.5rem}.form-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">House of Tarab</a>
+  <div class="nav-links">
+    <a href="index.html">Coming Soon</a>
+    <a href="tickets.html">Get Tickets</a>
+    <a href="rsvp.html" class="active">RSVP</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- Invitation Letter from Joy -->
+  <div class="letter">
+    <h2>A Personal Invitation</h2>
+    <h1>House of Tarab · The Debut Show</h1>
+
+    <p>Dear Guest,</p>
+
+    <p>I have been building something. And on July 16th, I want you to be in the room when it is revealed for the first time.</p>
+
+    <p>House of Tarab — my made-to-order fashion house — presents its debut collection at a fashion show and cocktail reception in Atlanta, Georgia. Every piece you will see was designed for a specific kind of woman. The woman who walks into a room and the energy shifts. The woman who dresses not to be noticed, but because she understands the difference between <em>being seen</em> and <em>being felt</em>.</p>
+
+    <div class="details">
+      <strong>THE DEBUT SHOW</strong>
+      Thursday, July 16, 2026<br>
+      Doors open 7:00 PM · Show begins 7:30 PM · Cocktail reception 9:00 PM<br>
+      1235 Chattahoochee Ave NW Suite 130, Atlanta, Georgia<br>
+      Dress code: <strong>Smart Creative</strong><br>
+      Admission: Complimentary
+    </div>
+
+    <p>Seating is limited. I would love for you to be there.</p>
+    <p>Please RSVP below by <strong>July 9, 2026</strong>.</p>
+
+    <p>I cannot wait to show you what I have been working on.</p>
+
+    <p class="sig">With love,<br><strong>Joy</strong><br>Founder, House of Tarab</p>
+  </div>
+
+  <!-- RSVP Form -->
+  <div class="form-box" id="rsvp-form-section">
+    <div class="form-header">
+      <h3>RSVP — The Debut Show</h3>
+    </div>
+    <div class="form-body">
+      <div class="form-grid">
+        <div class="field"><label>First Name</label><input type="text" id="r-fname" placeholder="Your first name" required /></div>
+        <div class="field"><label>Last Name</label><input type="text" id="r-lname" placeholder="Your last name" required /></div>
+      </div>
+      <div class="form-grid single">
+        <div class="field"><label>Email Address</label><input type="email" id="r-email" placeholder="hello@youremail.com" required /></div>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Number of Guests</label>
+          <select id="r-guests">
+            <option value="1">Just me (1 guest)</option>
+            <option value="2">Myself + 1 (2 guests)</option>
+            <option value="3">Myself + 2 (3 guests)</option>
+            <option value="4">Myself + 3 (4 guests)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Dietary Restrictions</label>
+          <input type="text" id="r-dietary" placeholder="None, vegetarian, gluten-free, etc." />
+        </div>
+      </div>
+      <div class="form-grid single">
+        <div class="field">
+          <label>Note for Joy (optional)</label>
+          <textarea id="r-note" placeholder="A personal message for the founder..."></textarea>
+        </div>
+      </div>
+      <button class="submit-btn" onclick="handleRSVP()">Send RSVP</button>
+    </div>
+  </div>
+
+  <!-- Thank You -->
+  <div class="thank-you" id="thank-you">
+    <div class="icon">✦</div>
+    <h3>You Are on the List</h3>
+    <p>Thank you for your RSVP. Joy is looking forward to having you at the debut show on July 16th. You will receive a confirmation at the email you provided.</p>
+    <p style="margin-top:1.5rem;color:var(--gold);font-family:'Cormorant Garamond',serif;font-style:italic;">"For the rooms that remember you."</p>
+    <div style="margin-top:1.5rem"><a href="index.html" style="color:var(--muted);font-size:10px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none">← Back to House of Tarab</a></div>
+  </div>
+
+</div>
+
+<footer>
+  <p class="gold">House of Tarab — Founded by Joy</p>
+  <p>hello@houseoftarab.net · Atlanta, Georgia</p>
+  <p style="margin-top:.5rem">"For the rooms that remember you."</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+function handleRSVP() {
+  const fname = document.getElementById('r-fname').value.trim();
+  const lname = document.getElementById('r-lname').value.trim();
+  const email = document.getElementById('r-email').value.trim();
+  const guests = document.getElementById('r-guests').value;
+  const dietary = document.getElementById('r-dietary').value.trim();
+  const note = document.getElementById('r-note').value.trim();
+
+  if (!fname || !lname) { showToast('Please enter your name.'); return; }
+  if (!email || !email.includes('@')) { showToast('Please enter a valid email.'); return; }
+
+  // Store in localStorage for now
+  const rsvps = JSON.parse(localStorage.getItem('hot_rsvps') || '[]');
+  rsvps.push({ fname, lname, email, guests: parseInt(guests), dietary, note, timestamp: new Date().toISOString() });
+  localStorage.setItem('hot_rsvps', JSON.stringify(rsvps));
+
+  document.getElementById('rsvp-form-section').style.display = 'none';
+  document.getElementById('thank-you').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  showToast('RSVP received! See you on July 16.');
+}
+</script>
+</body>
+</html>
