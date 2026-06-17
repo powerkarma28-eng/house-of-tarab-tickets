@@ -27,6 +27,19 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Redirect old URL (house-of-tarab-tickets-1) to new URL
+const OLD_HOST = 'house-of-tarab-tickets-1.onrender.com';
+const NEW_BASE_URL = process.env.BASE_URL || 'https://house-of-tarab-tickets-2.onrender.com';
+
+app.use((req, res, next) => {
+  const host = req.get('host') || '';
+  if (host.includes(OLD_HOST)) {
+    const newUrl = NEW_BASE_URL + req.originalUrl;
+    return res.redirect(301, newUrl);
+  }
+  next();
+});
+
 // API routes
 app.use('/api/waitlist', waitlistRoutes);
 app.use('/api', checkoutRoutes);
