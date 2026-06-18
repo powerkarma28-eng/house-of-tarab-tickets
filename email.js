@@ -50,7 +50,7 @@ function buildConfirmationEmail({ firstName, ref, ticketType, quantity, total })
     <div class="details">
       <strong>THE DEBUT SHOW</strong><br>
       Thursday, July 16, 2026<br>
-      Doors open 7:00 PM · Show begins 7:30 PM · Cocktail reception 9:00 PM<br>
+      Doors open 7:00 PM · Show begins 7:30 PM<br>
       1235 Chattahoochee Ave NW Suite 130, Atlanta, Georgia<br>
       Dress code: Smart Creative<br><br>
       <strong>YOUR TICKET</strong><br>
