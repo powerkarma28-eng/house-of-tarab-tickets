@@ -376,24 +376,24 @@ function validateForm() {
 }
 
 async function proceedToStripe() {
-  if (!validateForm()) return;
-  const total = updateTotal();
-  const guests = document.getElementById('c-guests').value;
-  const footage = document.getElementById('c-footage')?.value === 'yes';
-  const donation = parseFloat(document.getElementById('c-donation')?.value) || 0;
-  const payload = {
-    firstName: document.getElementById('c-fname').value.trim(),
-    lastName: document.getElementById('c-lname').value.trim(),
-    email: document.getElementById('c-email').value.trim(),
-    phone: document.getElementById('c-phone').value.trim(),
-    howHeard: document.getElementById('c-source').value,
-    ticketType: selectedTicket,
-    quantity: parseInt(guests),
-    donation: donation,
-    footageDiscount: footage,
-    ticketPrice: total / parseInt(guests),
-    note: ''
-  };
+      if (!validateForm()) return;
+      const total = updateTotal();
+      const guests = document.getElementById('c-guests').value;
+      const footage = document.getElementById('c-footage')?.value === 'yes';
+      const donation = parseFloat(document.getElementById('c-donation')?.value) || 0;
+      const payload = {
+        firstName: document.getElementById('c-fname').value.trim(),
+        lastName: document.getElementById('c-lname').value.trim(),
+        email: document.getElementById('c-email').value.trim(),
+        phone: document.getElementById('c-phone').value.trim(),
+        howHeard: document.getElementById('c-source').value,
+        ticketType: selectedTicket,
+        quantity: parseInt(guests),
+        donation: donation,
+        footageDiscount: footage,
+        ticketPrice: selectedPrice,
+        note: ''
+      };
   try {
     const response = await fetch('/api/create-checkout-session', {
       method: 'POST',
