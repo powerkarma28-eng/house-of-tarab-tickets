@@ -127,6 +127,19 @@ router.post('/create-checkout-session', async (req, res) => {
         paymentStatus: 'pending',
       });
 
+      // Send confirmation email immediately
+      if (email) {
+        sendConfirmationEmail({
+          email,
+          firstName,
+          ref,
+          ticketType: ticketType || 'General Admission',
+          quantity: qty,
+          total: totalCents / 100,
+        });
+      }
+      console.log(`Confirmation email triggered for ${email} (ref: ${ref})`);
+
       return res.json({ url: session.url, sessionId: session.id });
     } else {
       // Fallback: no Stripe configured — store order and return success URL
@@ -146,6 +159,18 @@ router.post('/create-checkout-session', async (req, res) => {
         stripeSessionId: '',
         paymentStatus: 'pending',
       });
+
+      // Send confirmation email immediately
+      if (email) {
+        sendConfirmationEmail({
+          email,
+          firstName,
+          ref,
+          ticketType: ticketType || 'General Admission',
+          quantity: qty,
+          total: totalCents / 100,
+        });
+      }
 
       const successUrl = `${baseUrl}/tickets.html?confirmed=true&ref=${ref}&name=${encodeURIComponent(firstName + ' ' + lastName)}&ticket=${encodeURIComponent(ticketType || 'General Admission')}&guests=${qty}&email=${encodeURIComponent(email)}&total=${(totalCents / 100).toFixed(2)}`;
       return res.json({ url: successUrl, sessionId: null, fallback: true });
