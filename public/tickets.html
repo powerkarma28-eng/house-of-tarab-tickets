@@ -391,7 +391,7 @@ async function proceedToStripe() {
         quantity: parseInt(guests),
         donation: donation,
         footageDiscount: footage,
-        ticketPrice: selectedPrice,
+        ticketPrice: selectedPrice * 100,
         note: ''
       };
   try {
