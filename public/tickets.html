@@ -409,32 +409,46 @@ async function proceedToStripe() {
 }
 
 function proceedToPayPal() {
-  if (!validateForm()) return;
-  const total = updateTotal();
-  const guests = document.getElementById('c-guests').value;
-  const fname = document.getElementById('c-fname').value.trim();
-  const lname = document.getElementById('c-lname').value.trim();
-  const email = document.getElementById('c-email').value.trim();
-  const ref = 'HOT-' + Date.now().toString().slice(-6);
+      if (!validateForm()) return;
+      const total = updateTotal();
+      const guests = document.getElementById('c-guests').value;
+      const fname = document.getElementById('c-fname').value.trim();
+      const lname = document.getElementById('c-lname').value.trim();
+      const email = document.getElementById('c-email').value.trim();
+      const ref = 'HOT-' + Date.now().toString().slice(-6);
 
-  const rsvps = JSON.parse(localStorage.getItem('hot_rsvps') || '[]');
-  rsvps.push({ ref, name: fname+' '+lname, email, phone: document.getElementById('c-phone').value, ticket: selectedTicket, guests, total, source: document.getElementById('c-source').value, timestamp: new Date().toISOString() });
-  localStorage.setItem('hot_rsvps', JSON.stringify(rsvps));
+      const rsvps = JSON.parse(localStorage.getItem('hot_rsvps') || '[]');
+      rsvps.push({ ref, name: fname+' '+lname, email, phone: document.getElementById('c-phone').value, ticket: selectedTicket, guests, total, source: document.getElementById('c-source').value, timestamp: new Date().toISOString() });
+      localStorage.setItem('hot_rsvps', JSON.stringify(rsvps));
 
-  const paypalEmail = 'hello@houseoftarab.net'; // ← Change this to your PayPal business email
-  const paypalURL = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${encodeURIComponent(paypalEmail)}&item_name=${encodeURIComponent('House of Tarab - '+selectedTicket)}&amount=${total.toFixed(2)}&currency_code=USD&return=${encodeURIComponent(window.location.href+'?confirmed=true&ref='+ref+'&name='+encodeURIComponent(fname+' '+lname)+'&ticket='+encodeURIComponent(selectedTicket)+'&guests='+guests+'&email='+encodeURIComponent(email))}&cancel_return=${encodeURIComponent(window.location.href)}`;
-  window.location.href = paypalURL;
-}
+      const paypalEmail = 'hello@houseoftarab.net'; // ← Change this to your PayPal business email
+      const paypalURL = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${encodeURIComponent(paypalEmail)}&item_name=${encodeURIComponent('House of Tarab - '+selectedTicket)}&amount=${total.toFixed(2)}&currency_code=USD&return=${encodeURIComponent(window.location.href+'?confirmed=true&ref='+ref+'&name='+encodeURIComponent(fname+' '+lname)+'&ticket='+encodeURIComponent(selectedTicket)+'&guests='+guests+'&email='+encodeURIComponent(email)+'&total='+total.toFixed(2))}&cancel_return=${encodeURIComponent(window.location.href)}`;
+      window.location.href = paypalURL;
+    }
 
-function showConfirmation(ref, name, ticket, guests, email, total) {
-  document.getElementById('checkout-section').style.display = 'none';
-  document.getElementById('confirm-section').style.display = 'block';
-  window.scrollTo({top: 0, behavior: 'smooth'});
+    function showConfirmation(ref, name, ticket, guests, email, total) {
+      document.getElementById('checkout-section').style.display = 'none';
+      document.getElementById('confirm-section').style.display = 'block';
+      window.scrollTo({top: 0, behavior: 'smooth'});
 
-  document.getElementById('stub-name').textContent = name;
-  document.getElementById('stub-type').textContent = ticket;
-  document.getElementById('stub-guests').textContent = guests + (guests == 1 ? ' guest' : ' guests');
-  document.getElementById('stub-ref').textContent = ref;
+      document.getElementById('stub-name').textContent = name;
+      document.getElementById('stub-type').textContent = ticket;
+      document.getElementById('stub-guests').textContent = guests + (guests == 1 ? ' guest' : ' guests');
+      document.getElementById('stub-ref').textContent = ref;
+
+      // Send confirmation email via API
+      fetch('/api/send-confirmation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          firstName: name.split(' ')[0],
+          ref: ref,
+          ticketType: ticket,
+          quantity: parseInt(guests) || 1,
+          total: parseFloat(total) || 0
+        })
+      }).catch(err => console.log('Email send error:', err));
 
   const emailBody = `
     <p><strong>Dear ${name},</strong></p><br>
@@ -469,18 +483,18 @@ function showConfirmation(ref, name, ticket, guests, email, total) {
 }
 
 window.addEventListener('load', function() {
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('confirmed') === 'true') {
-    showConfirmation(
-      params.get('ref') || 'HOT-000000',
-      params.get('name') || 'Guest',
-      params.get('ticket') || 'General Admission',
-      params.get('guests') || '1',
-      params.get('email') || '',
-      10
-    );
-  }
-});
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('confirmed') === 'true') {
+        showConfirmation(
+          params.get('ref') || 'HOT-000000',
+          params.get('name') || 'Guest',
+          params.get('ticket') || 'General Admission',
+          params.get('guests') || '1',
+          params.get('email') || '',
+          params.get('total') || '10'
+        );
+      }
+    });
 </script>
 </body>
 </html>

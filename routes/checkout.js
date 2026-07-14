@@ -230,6 +230,37 @@ router.post('/stripe-webhook', express.raw({ type: 'application/json' }), async 
   res.json({ received: true });
 });
 
+// POST /api/send-confirmation — send confirmation email (used by PayPal flow)
+router.post('/send-confirmation', async (req, res) => {
+  try {
+    const { email, firstName, ref, ticketType, quantity, total } = req.body;
+
+    if (!email || !ref) {
+      return res.status(400).json({ success: false, error: 'Missing required fields (email, ref)' });
+    }
+
+    const result = await sendConfirmationEmail({
+      email,
+      firstName: firstName || 'Friend',
+      ref,
+      ticketType: ticketType || 'General Admission',
+      quantity: parseInt(quantity) || 1,
+      total: parseFloat(total) || 0,
+    });
+
+    if (result.sent) {
+      return res.json({ success: true, message: 'Confirmation email sent.' });
+    } else if (result.reason === 'Resend not configured') {
+      return res.json({ success: true, note: 'Email not sent (Resend not configured), but order recorded.' });
+    } else {
+      return res.status(500).json({ success: false, error: 'Failed to send email.' });
+    }
+  } catch (err) {
+    console.error('Send confirmation error:', err);
+    return res.status(500).json({ success: false, error: 'Server error.' });
+  }
+});
+
 // POST /api/checkout — simpler checkout endpoint (fallback)
 router.post('/', async (req, res) => {
   try {
