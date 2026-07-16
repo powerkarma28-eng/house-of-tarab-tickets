@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>House of Tarab — Coming Soon</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--gold:#C9A96E;--gold-light:#E8D5A3;--deep:#1C0F0A;--surface:#2E1A13;--smoke:#F5EDE4;--muted:#9A8070}
+  html{height:100%}
+  body{background:var(--deep);color:var(--smoke);font-family:'Jost',sans-serif;font-weight:200;letter-spacing:.04em;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow-x:hidden}
+  .bg{position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(201,169,110,0.07) 0%,transparent 70%);pointer-events:none}
+  .wrap{max-width:600px;width:100%;padding:4rem 2rem;text-align:center;position:relative;z-index:1}
+  .brand-house{font-family:'Cinzel',serif;font-size:clamp(1.2rem,3vw,1.8rem);font-weight:400;color:var(--smoke);letter-spacing:.15em;line-height:1}
+  .brand-tarab{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(3rem,8vw,5rem);font-weight:300;color:var(--gold);letter-spacing:.08em;line-height:.9;margin-bottom:1.5rem}
+  .rule{display:flex;align-items:center;gap:1.5rem;margin:2rem auto;max-width:300px}
+  .rule-line{flex:1;height:.5px;background:linear-gradient(to right,transparent,rgba(201,169,110,.3),transparent)}
+  .rule-dot{color:var(--gold);opacity:.5;font-size:14px}
+  .cs-label{font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:block}
+  p{font-size:14px;line-height:1.9;color:var(--muted);margin-bottom:2rem}
+  .social a{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;margin:0 1rem;transition:color .3s}
+  .social a:hover{color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="wrap">
+  <div class="brand-house">House of</div>
+  <div class="brand-tarab">Tarab</div>
+  <div class="rule"><div class="rule-line"></div><span class="rule-dot">◆</span><div class="rule-line"></div></div>
+  <span class="cs-label">Ticket sales have closed</span>
+  <p>The debut show took place tonight. Thank you to everyone who joined us.<br><br>
+  The House is now preparing for its next chapter — made-to-order garments, crafted for those who understand the difference between being seen and being felt.</p>
+  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--gold)">"For the rooms that remember you."</p>
+  <div class="rule"><div class="rule-line"></div><span class="rule-dot">◆</span><div class="rule-line"></div></div>
+  <div class="social">
+    <a href="https://instagram.com/houseoftarab" target="_blank">Instagram</a>
+    <a href="mailto:hello@houseoftarab.net">Email</a>
+  </div>
+</div>
+</body>
+</html>

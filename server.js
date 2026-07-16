@@ -49,6 +49,16 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// After 7:30 PM ET on July 16, 2026, switch to coming soon mode
+const CUTOFF_TIME = new Date('2026-07-16T23:30:00Z').getTime(); // 7:30 PM ET
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api/') || req.path === '/coming-soon.html') return next();
+  if (Date.now() >= CUTOFF_TIME) {
+    return res.sendFile(path.join(__dirname, 'public', 'coming-soon.html'));
+  }
+  next();
+});
+
 // Serve static frontend files
 const publicDir = path.join(__dirname, 'public');
 app.use(express.static(publicDir));
