@@ -20,16 +20,16 @@ function buildConfirmationEmail({ firstName, ref, ticketType, quantity, total })
 <head>
   <meta charset="UTF-8">
   <style>
-    body{background:#1C0F0A;color:#F5EDE4;font-family:Georgia,serif;padding:40px 20px;margin:0}
-    .wrap{max-width:600px;margin:0 auto;background:#2E1A13;border:1px solid rgba(201,169,110,0.2);padding:40px}
+    body{background:#2C1810;color:#F5EDE4;font-family:Georgia,serif;padding:40px 20px;margin:0}
+    .wrap{max-width:600px;margin:0 auto;background:#3E2723;border:1px solid rgba(201,169,110,0.2);padding:40px}
     h1{font-family:Georgia,serif;color:#C9A96E;font-size:22px;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:5px}
     .sub{font-style:italic;color:#9A8070;text-align:center;font-size:14px;margin-bottom:30px}
     .divider{height:1px;background:linear-gradient(to right,transparent,rgba(201,169,110,0.3),transparent);margin:20px 0}
     p{font-size:15px;line-height:1.8;color:#F5EDE4}
-    .details{background:#1C0F0A;border-left:3px solid #C9A96E;padding:15px 20px;margin:20px 0;font-size:14px;line-height:1.7}
+    .details{background:#2C1810;border-left:3px solid #C9A96E;padding:15px 20px;margin:20px 0;font-size:14px;line-height:1.7}
     .details strong{color:#C9A96E}
     .cta{text-align:center;margin:30px 0}
-    .cta a{display:inline-block;background:#C9A96E;color:#1C0F0A;padding:12px 28px;text-decoration:none;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-family:Georgia,serif}
+    .cta a{display:inline-block;background:#C9A96E;color:#2C1810;padding:12px 28px;text-decoration:none;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-family:Georgia,serif}
     .cta a:hover{background:#E8D5A3}
     .sig{color:#C9A96E;font-style:italic;margin-top:25px}
     .footer{text-align:center;font-size:11px;color:#9A8070;margin-top:30px}
@@ -92,13 +92,13 @@ function buildOrderConfirmationEmail({ firstName, ref, productName, size, price,
 <head>
   <meta charset="UTF-8">
   <style>
-    body{background:#1C0F0A;color:#F5EDE4;font-family:Georgia,serif;padding:40px 20px;margin:0}
-    .wrap{max-width:600px;margin:0 auto;background:#2E1A13;border:1px solid rgba(201,169,110,0.2);padding:40px}
+    body{background:#2C1810;color:#F5EDE4;font-family:Georgia,serif;padding:40px 20px;margin:0}
+    .wrap{max-width:600px;margin:0 auto;background:#3E2723;border:1px solid rgba(201,169,110,0.2);padding:40px}
     h1{font-family:Georgia,serif;color:#C9A96E;font-size:22px;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:5px}
     .sub{font-style:italic;color:#9A8070;text-align:center;font-size:14px;margin-bottom:30px}
     .divider{height:1px;background:linear-gradient(to right,transparent,rgba(201,169,110,0.3),transparent);margin:20px 0}
     p{font-size:15px;line-height:1.8;color:#F5EDE4}
-    .details{background:#1C0F0A;border-left:3px solid #C9A96E;padding:15px 20px;margin:20px 0;font-size:14px;line-height:1.7}
+    .details{background:#2C1810;border-left:3px solid #C9A96E;padding:15px 20px;margin:20px 0;font-size:14px;line-height:1.7}
     .details strong{color:#C9A96E}
     .sig{color:#C9A96E;font-style:italic;margin-top:25px}
     .footer{text-align:center;font-size:11px;color:#9A8070;margin-top:30px}
@@ -151,13 +151,13 @@ function buildAppointmentConfirmationEmail({ name, preferredDate, locationPrefer
 <head>
   <meta charset="UTF-8">
   <style>
-    body{background:#1C0F0A;color:#F5EDE4;font-family:Georgia,serif;padding:40px 20px;margin:0}
-    .wrap{max-width:600px;margin:0 auto;background:#2E1A13;border:1px solid rgba(201,169,110,0.2);padding:40px}
+    body{background:#2C1810;color:#F5EDE4;font-family:Georgia,serif;padding:40px 20px;margin:0}
+    .wrap{max-width:600px;margin:0 auto;background:#3E2723;border:1px solid rgba(201,169,110,0.2);padding:40px}
     h1{font-family:Georgia,serif;color:#C9A96E;font-size:22px;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:5px}
     .sub{font-style:italic;color:#9A8070;text-align:center;font-size:14px;margin-bottom:30px}
     .divider{height:1px;background:linear-gradient(to right,transparent,rgba(201,169,110,0.3),transparent);margin:20px 0}
     p{font-size:15px;line-height:1.8;color:#F5EDE4}
-    .details{background:#1C0F0A;border-left:3px solid #C9A96E;padding:15px 20px;margin:20px 0;font-size:14px;line-height:1.7}
+    .details{background:#2C1810;border-left:3px solid #C9A96E;padding:15px 20px;margin:20px 0;font-size:14px;line-height:1.7}
     .details strong{color:#C9A96E}
     .sig{color:#C9A96E;font-style:italic;margin-top:25px}
     .footer{text-align:center;font-size:11px;color:#9A8070;margin-top:30px}
