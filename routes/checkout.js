@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
-const { sendConfirmationEmail } = require('../email');
+const { sendConfirmationEmail, sendOrderConfirmationEmail } = require('../email');
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 let stripe = null;
@@ -293,6 +293,133 @@ router.post('/', async (req, res) => {
   } catch (err) {
     console.error('Checkout fallback error:', err);
     return res.status(500).json({ success: false, error: 'Server error.' });
+  }
+});
+
+// POST /api/create-product-checkout — create Stripe checkout for dress purchases
+router.post('/create-product-checkout', async (req, res) => {
+  try {
+    const { firstName, lastName, email, phone, product, size, price } = req.body;
+
+    if (!firstName || !lastName) {
+      return res.status(400).json({ error: 'Please enter your full name.' });
+    }
+    if (!email || !email.includes('@')) {
+      return res.status(400).json({ error: 'Please enter a valid email address.' });
+    }
+    if (!size) {
+      return res.status(400).json({ error: 'Please select a size.' });
+    }
+
+    const productPrice = parseFloat(price) || 250;
+    const priceCents = Math.round(productPrice * 100);
+
+    // Generate reference
+    const ref = 'HOT-' + Date.now().toString().slice(-6) + '-' + Math.random().toString(36).slice(2, 5).toUpperCase();
+
+    const baseUrl = process.env.BASE_URL || `${req.protocol}://${req.get('host')}`;
+
+    if (stripe) {
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items: [{
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: `House of Tarab — ${product}`,
+              description: `Les Éternelles Collection · Made to Order · Size ${size}`,
+            },
+            unit_amount: priceCents,
+          },
+          quantity: 1,
+        }],
+        mode: 'payment',
+        success_url: `${baseUrl}/shop.html?confirmed=true&ref=${ref}&product=${encodeURIComponent(product)}&size=${encodeURIComponent(size)}&name=${encodeURIComponent(firstName + ' ' + lastName)}&email=${encodeURIComponent(email)}&total=${(priceCents / 100).toFixed(2)}`,
+        cancel_url: `${baseUrl}/shop.html`,
+        customer_email: email,
+        metadata: {
+          ref,
+          firstName,
+          lastName,
+          product,
+          size,
+          price: String(productPrice),
+          orderType: 'product',
+        },
+      });
+
+      // Store order in database
+      db.createOrder({
+        ref,
+        firstName,
+        lastName,
+        email,
+        phone: phone || '',
+        ticketType: product,
+        quantity: 1,
+        donation: 0,
+        ticketPrice: productPrice,
+        total: productPrice,
+        howHeard: '',
+        footageDiscount: false,
+        stripeSessionId: session.id,
+        paymentStatus: 'pending',
+      });
+
+      // Send confirmation email
+      if (email) {
+        sendOrderConfirmationEmail({
+          email,
+          firstName,
+          ref,
+          productName: product,
+          size,
+          price: productPrice,
+          total: productPrice,
+        });
+      }
+
+      return res.json({ url: session.url, sessionId: session.id });
+    } else {
+      // Fallback: no Stripe configured
+      db.createOrder({
+        ref,
+        firstName,
+        lastName,
+        email,
+        phone: phone || '',
+        ticketType: product,
+        quantity: 1,
+        donation: 0,
+        ticketPrice: productPrice,
+        total: productPrice,
+        howHeard: '',
+        footageDiscount: false,
+        stripeSessionId: '',
+        paymentStatus: 'pending',
+      });
+
+      if (email) {
+        sendOrderConfirmationEmail({
+          email,
+          firstName,
+          ref,
+          productName: product,
+          size,
+          price: productPrice,
+          total: productPrice,
+        });
+      }
+
+      return res.json({
+        url: `${baseUrl}/shop.html?confirmed=true&ref=${ref}&product=${encodeURIComponent(product)}&size=${encodeURIComponent(size)}&name=${encodeURIComponent(firstName + ' ' + lastName)}`,
+        sessionId: null,
+        fallback: true,
+      });
+    }
+  } catch (err) {
+    console.error('Product checkout error:', err);
+    return res.status(500).json({ error: 'Could not create checkout session. Please try again.' });
   }
 });
 

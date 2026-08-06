@@ -45,6 +45,18 @@ function initTables() {
       payment_status TEXT DEFAULT 'pending',
       created_at TEXT DEFAULT (datetime('now'))
     );
+
+    CREATE TABLE IF NOT EXISTS appointments (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      email TEXT NOT NULL,
+      phone TEXT,
+      location_preference TEXT DEFAULT 'Joy',
+      preferred_date TEXT,
+      style_notes TEXT,
+      status TEXT DEFAULT 'pending',
+      created_at TEXT DEFAULT (datetime('now'))
+    );
   `);
 }
 
@@ -108,6 +120,35 @@ function updateOrderStatus(ref, status) {
   d.prepare('UPDATE orders SET payment_status = ? WHERE ref = ?').run(status, ref);
 }
 
+// Appointments
+function createAppointment(data) {
+  const d = getDb();
+  const stmt = d.prepare(`
+    INSERT INTO appointments (name, email, phone, location_preference, preferred_date, style_notes, status)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `);
+  const info = stmt.run(
+    data.name,
+    data.email,
+    data.phone || '',
+    data.locationPreference || 'Joy',
+    data.preferredDate || '',
+    data.styleNotes || '',
+    'pending'
+  );
+  return { id: info.lastInsertRowid };
+}
+
+function getAppointments() {
+  const d = getDb();
+  return d.prepare('SELECT * FROM appointments ORDER BY created_at DESC').all();
+}
+
+function getAppointmentById(id) {
+  const d = getDb();
+  return d.prepare('SELECT * FROM appointments WHERE id = ?').get(id);
+}
+
 module.exports = {
   addToWaitlist,
   getWaitlistCount,
@@ -115,4 +156,7 @@ module.exports = {
   getOrderByRef,
   getOrderBySessionId,
   updateOrderStatus,
+  createAppointment,
+  getAppointments,
+  getAppointmentById,
 };

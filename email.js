@@ -83,6 +83,118 @@ function buildConfirmationEmail({ firstName, ref, ticketType, quantity, total })
 }
 
 /**
+ * Build order confirmation email for dress purchases
+ */
+function buildOrderConfirmationEmail({ firstName, ref, productName, size, price, total }) {
+  return `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body{background:#1C0F0A;color:#F5EDE4;font-family:Georgia,serif;padding:40px 20px;margin:0}
+    .wrap{max-width:600px;margin:0 auto;background:#2E1A13;border:1px solid rgba(201,169,110,0.2);padding:40px}
+    h1{font-family:Georgia,serif;color:#C9A96E;font-size:22px;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:5px}
+    .sub{font-style:italic;color:#9A8070;text-align:center;font-size:14px;margin-bottom:30px}
+    .divider{height:1px;background:linear-gradient(to right,transparent,rgba(201,169,110,0.3),transparent);margin:20px 0}
+    p{font-size:15px;line-height:1.8;color:#F5EDE4}
+    .details{background:#1C0F0A;border-left:3px solid #C9A96E;padding:15px 20px;margin:20px 0;font-size:14px;line-height:1.7}
+    .details strong{color:#C9A96E}
+    .sig{color:#C9A96E;font-style:italic;margin-top:25px}
+    .footer{text-align:center;font-size:11px;color:#9A8070;margin-top:30px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>House of Tarab</h1>
+    <p class="sub">Les Éternelles — Made to Order</p>
+    <div class="divider"></div>
+
+    <p>Dear <strong>${firstName}</strong>,</p>
+
+    <p>Thank you for your order from the Les Éternelles collection. Each piece is crafted individually, made to order — your garment is being prepared with the care and attention it deserves.</p>
+
+    <div class="details">
+      <strong>YOUR ORDER</strong><br>
+      Reference: ${ref}<br>
+      Piece: ${productName}<br>
+      Size: ${size}<br>
+      Amount: $${total.toFixed(2)}
+    </div>
+
+    <p>As each piece is made to order, please allow 3–4 weeks for your garment to be completed. We will be in touch with updates on your order's progress.</p>
+
+    <p>Should you have any questions, please reply to this email — we are here for you.</p>
+
+    <p class="sig">With gratitude,<br>Joy<br>Founder, House of Tarab</p>
+
+    <div class="divider"></div>
+    <div class="footer">
+      hello@houseoftarab.net · Atlanta, Georgia<br>
+      "For the rooms that remember you."
+    </div>
+  </div>
+</body>
+</html>`;
+}
+
+/**
+ * Build appointment confirmation email
+ */
+function buildAppointmentConfirmationEmail({ name, preferredDate, locationPreference, styleNotes }) {
+  const locationLabel = locationPreference === 'Drycleaner partner' ? 'a partner drycleaner' : 'Joy';
+  const dateDisplay = preferredDate || 'To be confirmed';
+
+  return `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body{background:#1C0F0A;color:#F5EDE4;font-family:Georgia,serif;padding:40px 20px;margin:0}
+    .wrap{max-width:600px;margin:0 auto;background:#2E1A13;border:1px solid rgba(201,169,110,0.2);padding:40px}
+    h1{font-family:Georgia,serif;color:#C9A96E;font-size:22px;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:5px}
+    .sub{font-style:italic;color:#9A8070;text-align:center;font-size:14px;margin-bottom:30px}
+    .divider{height:1px;background:linear-gradient(to right,transparent,rgba(201,169,110,0.3),transparent);margin:20px 0}
+    p{font-size:15px;line-height:1.8;color:#F5EDE4}
+    .details{background:#1C0F0A;border-left:3px solid #C9A96E;padding:15px 20px;margin:20px 0;font-size:14px;line-height:1.7}
+    .details strong{color:#C9A96E}
+    .sig{color:#C9A96E;font-style:italic;margin-top:25px}
+    .footer{text-align:center;font-size:11px;color:#9A8070;margin-top:30px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>House of Tarab</h1>
+    <p class="sub">Custom Appointment Request</p>
+    <div class="divider"></div>
+
+    <p>Dear <strong>${name}</strong>,</p>
+
+    <p>Thank you for requesting a custom appointment with House of Tarab. We have received your request and will be in touch shortly to confirm the details.</p>
+
+    <div class="details">
+      <strong>YOUR APPOINTMENT REQUEST</strong><br>
+      Preferred date: ${dateDisplay}<br>
+      Location: ${locationLabel}<br>
+      ${styleNotes ? `Style notes: ${styleNotes}` : ''}
+    </div>
+
+    <p>We look forward to creating something extraordinary together. A member of the House will reach out within 48 hours to finalize your appointment.</p>
+
+    <p class="sig">Warmly,<br>Joy<br>Founder, House of Tarab</p>
+
+    <div class="divider"></div>
+    <div class="footer">
+      hello@houseoftarab.net · Atlanta, Georgia<br>
+      "For the rooms that remember you."
+    </div>
+  </div>
+</body>
+</html>`;
+}
+
+/**
  * Send a ticket confirmation email using Resend
  */
 async function sendConfirmationEmail({ email, firstName, ref, ticketType, quantity, total }) {
@@ -114,4 +226,67 @@ async function sendConfirmationEmail({ email, firstName, ref, ticketType, quanti
   }
 }
 
-module.exports = { sendConfirmationEmail };
+/**
+ * Send an order confirmation email for dress purchases
+ */
+async function sendOrderConfirmationEmail({ email, firstName, ref, productName, size, price, total }) {
+  if (!resend) {
+    console.log('Resend not configured — skipping order email to', email);
+    console.log(`Would send: ref=${ref}, product=${productName}, size=${size}, total=$${total}`);
+    return { sent: false, reason: 'Resend not configured' };
+  }
+
+  try {
+    const html = buildOrderConfirmationEmail({ firstName, ref, productName, size, price, total });
+    const { data, error } = await resend.emails.send({
+      from: `Joy at House of Tarab <${FROM_EMAIL}>`,
+      to: email,
+      subject: `Your House of Tarab Order — ${productName}`,
+      html,
+    });
+
+    if (error) {
+      console.error('Resend email error:', error);
+      return { sent: false, error };
+    }
+
+    console.log(`Order confirmation email sent to ${email} for order ${ref}`);
+    return { sent: true, id: data?.id };
+  } catch (err) {
+    console.error('Failed to send order confirmation email:', err);
+    return { sent: false, error: err.message };
+  }
+}
+
+/**
+ * Send an appointment confirmation email
+ */
+async function sendAppointmentConfirmation({ email, name, preferredDate, locationPreference, styleNotes }) {
+  if (!resend) {
+    console.log('Resend not configured — skipping appointment email to', email);
+    return { sent: false, reason: 'Resend not configured' };
+  }
+
+  try {
+    const html = buildAppointmentConfirmationEmail({ name, preferredDate, locationPreference, styleNotes });
+    const { data, error } = await resend.emails.send({
+      from: `Joy at House of Tarab <${FROM_EMAIL}>`,
+      to: email,
+      subject: 'Your Custom Appointment Request — House of Tarab',
+      html,
+    });
+
+    if (error) {
+      console.error('Resend email error:', error);
+      return { sent: false, error };
+    }
+
+    console.log(`Appointment confirmation email sent to ${email}`);
+    return { sent: true, id: data?.id };
+  } catch (err) {
+    console.error('Failed to send appointment confirmation email:', err);
+    return { sent: false, error: err.message };
+  }
+}
+
+module.exports = { sendConfirmationEmail, sendOrderConfirmationEmail, sendAppointmentConfirmation };

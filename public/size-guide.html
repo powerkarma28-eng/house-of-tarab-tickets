@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Size Guide | House of Tarab</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#C9A96E;--gold-light:#E8D5A3;--deep:#1C0F0A;--surface:#2E1A13;--smoke:#F5EDE4;--muted:#9A8070;--border:rgba(201,169,110,0.15)}
+html{height:100%}
+body{background:var(--deep);color:var(--smoke);font-family:'Jost',sans-serif;font-weight:200;letter-spacing:.04em;min-height:100vh;overflow-x:hidden}
+.bg{position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(201,169,110,0.07) 0%,transparent 70%);pointer-events:none;z-index:0}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(28,15,10,0.92);backdrop-filter:blur(12px);border-bottom:.5px solid var(--border)}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:.8rem 2rem}
+.nav-brand{font-family:'Cinzel',serif;font-size:14px;letter-spacing:.18em;color:var(--smoke);text-decoration:none}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+
+main{padding-top:5rem;position:relative;z-index:1}
+
+.page-header{text-align:center;padding:4rem 2rem 2rem}
+.page-label{font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:block}
+.page-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(2rem,5vw,3rem);font-weight:300;color:var(--smoke);margin-bottom:.5rem}
+.rule{display:flex;align-items:center;gap:1.5rem;margin:0 auto;max-width:280px}
+.rule-line{flex:1;height:.5px;background:linear-gradient(to right,transparent,rgba(201,169,110,.3),transparent)}
+.rule-dot{color:var(--gold);opacity:.5;font-size:14px}
+
+/* Size chart */
+.chart-section{max-width:700px;margin:0 auto;padding:2rem 2rem 5rem}
+.chart-card{background:var(--surface);border:.5px solid var(--border);overflow:hidden}
+.chart-table{width:100%;border-collapse:collapse}
+.chart-table th{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);padding:1rem 1.2rem;text-align:left;border-bottom:.5px solid var(--border);font-weight:400}
+.chart-table td{font-size:13px;color:var(--smoke);padding:1rem 1.2rem;border-bottom:.5px solid rgba(201,169,110,0.08);font-weight:200}
+.chart-table tr:last-child td{border-bottom:none}
+.chart-table tr:hover td{background:rgba(201,169,110,0.03)}
+
+.chart-note{padding:1.5rem 2rem;font-size:13px;color:var(--muted);line-height:1.9;border-top:.5px solid var(--border)}
+.chart-note strong{color:var(--smoke);font-weight:400}
+
+/* Custom callout */
+.custom-callout{text-align:center;padding:2rem;margin-top:2rem;border:.5px solid var(--border);background:var(--surface)}
+.custom-callout h3{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.4rem;color:var(--smoke);margin-bottom:.5rem}
+.custom-callout p{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:1.5rem}
+.custom-callout a{display:inline-block;padding:.8rem 2rem;background:var(--gold);color:var(--deep);text-decoration:none;font-size:10px;letter-spacing:.22em;text-transform:uppercase;transition:background .3s}
+.custom-callout a:hover{background:var(--gold-light)}
+
+footer{padding:3rem 2rem;text-align:center;position:relative;z-index:1;border-top:.5px solid var(--border)}
+.footer-links{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.footer-links a{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
+.footer-links a:hover{color:var(--gold)}
+.footer-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;color:var(--gold)}
+
+@media(max-width:600px){nav .nav-links{gap:1rem}.chart-table th,.chart-table td{padding:.8rem}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">House of Tarab</a>
+    <div class="nav-links">
+      <a href="/shop.html">Shop</a>
+      <a href="/appointments.html">Custom Appointments</a>
+      <a href="/#story">About</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="page-header">
+    <span class="page-label">Fit & Sizing</span>
+    <h1 class="page-title">Size Guide</h1>
+    <div class="rule" style="margin:1.5rem auto"><div class="rule-line"></div><span class="rule-dot">◆</span><div class="rule-line"></div></div>
+  </div>
+
+  <div class="chart-section">
+    <div class="chart-card">
+      <table class="chart-table">
+        <thead>
+          <tr>
+            <th>Size</th>
+            <th>Bust (in)</th>
+            <th>Waist (in)</th>
+            <th>Hip (in)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>0</td><td>32</td><td>24.5</td><td>35</td></tr>
+          <tr><td>2</td><td>33</td><td>25.5</td><td>36</td></tr>
+          <tr><td>4</td><td>34</td><td>26.5</td><td>37</td></tr>
+          <tr><td>6</td><td>35.5</td><td>28</td><td>38.5</td></tr>
+          <tr><td>8</td><td>37</td><td>29.5</td><td>40</td></tr>
+          <tr><td>10</td><td>38.5</td><td>31</td><td>41.5</td></tr>
+          <tr><td>12</td><td>40</td><td>32.5</td><td>43</td></tr>
+          <tr><td>14</td><td>42</td><td>34.5</td><td>45</td></tr>
+        </tbody>
+      </table>
+      <div class="chart-note">
+        <p><strong>How to measure:</strong> Bust — fullest part of bust, keeping tape parallel to floor. Waist — narrowest part of natural waist. Hip — fullest part of hips, about 8" below waist.</p>
+        <p style="margin-top:.8rem">These are standard US dress sizes. Each House of Tarab piece is <strong>made to order</strong> — if you fall between sizes or have specific fit requirements, we recommend booking a custom appointment for in-person measurements.</p>
+      </div>
+    </div>
+
+    <div class="custom-callout">
+      <h3>Need a Custom Fit?</h3>
+      <p>For a truly bespoke experience, schedule an in-person measurement with Joy or a partner drycleaner. Every custom piece is cut precisely to your measurements.</p>
+      <a href="/appointments.html">Book a Custom Appointment</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="/shop.html">Shop</a>
+    <a href="/appointments.html">Custom Appointments</a>
+    <a href="/size-guide.html">Size Guide</a>
+    <a href="/">Home</a>
+  </div>
+  <p class="footer-tagline">"For the rooms that remember you."</p>
+</footer>
+</body>
+</html>

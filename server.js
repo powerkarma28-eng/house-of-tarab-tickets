@@ -7,6 +7,7 @@ const path = require('path');
 
 const waitlistRoutes = require('./routes/waitlist');
 const checkoutRoutes = require('./routes/checkout');
+const appointmentsRoutes = require('./routes/appointments');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -27,36 +28,14 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Redirect old URL (house-of-tarab-tickets-1) to new URL
-const OLD_HOST = 'house-of-tarab-tickets-1.onrender.com';
-const NEW_BASE_URL = process.env.BASE_URL || 'https://house-of-tarab-tickets-2.onrender.com';
-
-app.use((req, res, next) => {
-  const host = req.get('host') || '';
-  if (host.includes(OLD_HOST)) {
-    const newUrl = NEW_BASE_URL + req.originalUrl;
-    return res.redirect(301, newUrl);
-  }
-  next();
-});
-
 // API routes
 app.use('/api/waitlist', waitlistRoutes);
 app.use('/api', checkoutRoutes);
+app.use('/api/appointments', appointmentsRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
-});
-
-// After 7:30 PM ET on July 16, 2026, switch to coming soon mode
-const CUTOFF_TIME = new Date('2026-07-16T23:30:00Z').getTime(); // 7:30 PM ET
-app.use((req, res, next) => {
-  if (req.path.startsWith('/api/') || req.path === '/coming-soon.html') return next();
-  if (Date.now() >= CUTOFF_TIME) {
-    return res.sendFile(path.join(__dirname, 'public', 'coming-soon.html'));
-  }
-  next();
 });
 
 // Serve static frontend files

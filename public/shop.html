@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop — Les Éternelles | House of Tarab</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#C9A96E;--gold-light:#E8D5A3;--deep:#1C0F0A;--surface:#2E1A13;--smoke:#F5EDE4;--muted:#9A8070;--border:rgba(201,169,110,0.15)}
+html{height:100%;scroll-behavior:smooth}
+body{background:var(--deep);color:var(--smoke);font-family:'Jost',sans-serif;font-weight:200;letter-spacing:.04em;min-height:100vh;overflow-x:hidden}
+.bg{position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(201,169,110,0.07) 0%,transparent 70%);pointer-events:none;z-index:0}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(28,15,10,0.92);backdrop-filter:blur(12px);border-bottom:.5px solid var(--border)}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:.8rem 2rem}
+.nav-brand{font-family:'Cinzel',serif;font-size:14px;letter-spacing:.18em;color:var(--smoke);text-decoration:none}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+
+main{padding-top:5rem;position:relative;z-index:1}
+
+/* Page header */
+.page-header{text-align:center;padding:4rem 2rem 2rem}
+.page-label{font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:block}
+.page-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(2rem,5vw,3.5rem);font-weight:300;color:var(--smoke);margin-bottom:.5rem}
+.page-sub{font-size:14px;color:var(--muted);line-height:1.8;max-width:500px;margin:0 auto}
+.rule{display:flex;align-items:center;gap:1.5rem;margin:0 auto;max-width:280px}
+.rule-line{flex:1;height:.5px;background:linear-gradient(to right,transparent,rgba(201,169,110,.3),transparent)}
+.rule-dot{color:var(--gold);opacity:.5;font-size:14px}
+
+/* Product sections */
+.product-section{padding:2rem 2rem 5rem;max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.product-section+.product-section{border-top:.5px solid var(--border);padding-top:5rem}
+.product-visual{aspect-ratio:3/4;background:linear-gradient(135deg,rgba(201,169,110,0.06) 0%,rgba(201,169,110,0.02) 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:.5px solid var(--border)}
+.product-visual::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 50% at 50% 40%,rgba(201,169,110,0.12) 0%,transparent 70%)}
+.product-visual-icon{font-size:5rem;color:var(--gold);opacity:.3;position:relative;z-index:1}
+.product-visual-label{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);z-index:2}
+
+.product-info{padding:1rem 0}
+.product-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.8rem,3vw,2.5rem);color:var(--smoke);margin-bottom:.3rem}
+.product-subtitle{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem}
+.product-price{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gold);letter-spacing:.08em;margin-bottom:.5rem}
+.product-mto{font-size:11px;color:var(--muted);margin-bottom:2rem;line-height:1.6}
+.product-mto span{color:var(--gold)}
+
+.product-desc{font-size:14px;color:var(--muted);line-height:1.9;margin-bottom:2rem}
+
+/* Form */
+.product-form{margin-top:1rem}
+.form-group{margin-bottom:1.5rem}
+.form-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--smoke);margin-bottom:.5rem;display:block}
+.form-select{width:100%;background:var(--surface);border:.5px solid var(--border);color:var(--smoke);padding:.8rem 1rem;font-family:'Jost',sans-serif;font-size:13px;font-weight:200;letter-spacing:.06em;outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;transition:border-color .3s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%23C9A96E'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center}
+.form-select:focus{border-color:var(--gold)}
+.form-select option{background:var(--surface);color:var(--smoke)}
+.form-input{width:100%;background:var(--surface);border:.5px solid var(--border);color:var(--smoke);padding:.8rem 1rem;font-family:'Jost',sans-serif;font-size:13px;font-weight:200;letter-spacing:.06em;outline:none;transition:border-color .3s}
+.form-input:focus{border-color:var(--gold)}
+.form-input::placeholder{color:var(--muted)}
+
+.btn-submit{display:block;width:100%;background:var(--gold);color:var(--deep);border:none;padding:1rem;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:background .3s;margin-top:.5rem}
+.btn-submit:hover{background:var(--gold-light)}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed}
+
+/* Confirmation */
+.confirmation{display:none;text-align:center;padding:3rem 2rem;max-width:500px;margin:0 auto}
+.confirmation-icon{font-size:3rem;margin-bottom:1rem}
+.confirmation h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.8rem;color:var(--smoke);margin-bottom:1rem}
+.confirmation p{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:.5rem}
+.confirmation .ref{font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:.1em;margin:1rem 0}
+.confirmation a{color:var(--gold);font-size:12px}
+
+/* Size guide link */
+.size-guide-link{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .3s;display:inline-block;margin-top:.3rem}
+.size-guide-link:hover{border-color:var(--gold)}
+
+/* Footer */
+footer{padding:3rem 2rem;text-align:center;position:relative;z-index:1;border-top:.5px solid var(--border)}
+.footer-links{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.footer-links a{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
+.footer-links a:hover{color:var(--gold)}
+.footer-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;color:var(--gold)}
+
+/* Toast */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--surface);border:.5px solid var(--gold);padding:1rem 1.5rem;font-size:12px;color:var(--smoke);z-index:9999;opacity:0;transform:translateY(10px);transition:all .4s;pointer-events:none;max-width:300px}
+.toast.show{opacity:1;transform:translateY(0)}
+
+/* Loading spinner */
+.spinner{display:none;width:20px;height:20px;border:2px solid var(--deep);border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;margin-left:.5rem;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:768px){
+  .product-section{grid-template-columns:1fr;gap:2rem}
+  .product-visual{aspect-ratio:4/5}
+}
+
+@media(max-width:600px){nav .nav-links{gap:1rem}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">House of Tarab</a>
+    <div class="nav-links">
+      <a href="/shop.html" class="active">Shop</a>
+      <a href="/appointments.html">Custom Appointments</a>
+      <a href="/#story">About</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <!-- Page Header -->
+  <div class="page-header">
+    <span class="page-label">The Debut Collection</span>
+    <h1 class="page-title">Les Éternelles</h1>
+    <div class="rule" style="margin:1.5rem auto"><div class="rule-line"></div><span class="rule-dot">◆</span><div class="rule-line"></div></div>
+    <p class="page-sub">Each piece is made to order, crafted individually from finer materials. Please allow 3–4 weeks for your garment to be completed.</p>
+  </div>
+
+  <!-- LE CINTRE -->
+  <div class="product-section" id="le-cintre">
+    <div class="product-visual">
+      <span class="product-visual-icon">⌂</span>
+      <span class="product-visual-label">Photography coming soon</span>
+    </div>
+    <div class="product-info">
+      <h2 class="product-name">Le Cintre</h2>
+      <div class="product-subtitle">Structured · Fitted</div>
+      <div class="product-price">$275</div>
+      <div class="product-mto"><span>Made to Order</span> · 3–4 weeks delivery</div>
+      <p class="product-desc">Architectural lines that sculpt and define. Le Cintre is cut for the woman whose presence is precision — a structured, fitted silhouette that holds its form and yours, crafted in finer materials that breathe with the body.</p>
+
+      <form class="product-form" id="form-le-cintre" onsubmit="handlePurchase(event, 'Le Cintre', 275)">
+        <div class="form-group">
+          <label class="form-label">Size</label>
+          <select class="form-select" id="size-le-cintre" required>
+            <option value="">Select a size</option>
+            <option value="0">0</option>
+            <option value="2">2</option>
+            <option value="4">4</option>
+            <option value="6">6</option>
+            <option value="8">8</option>
+            <option value="10">10</option>
+            <option value="12">12</option>
+            <option value="14">14</option>
+          </select>
+          <a href="/size-guide.html" class="size-guide-link" style="margin-top:.5rem">View Size Guide →</a>
+        </div>
+        <div class="form-group">
+          <label class="form-label">First Name</label>
+          <input type="text" class="form-input" id="first-le-cintre" placeholder="Your first name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name</label>
+          <input type="text" class="form-input" id="last-le-cintre" placeholder="Your last name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" id="email-le-cintre" placeholder="Your email address" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone (optional)</label>
+          <input type="tel" class="form-input" id="phone-le-cintre" placeholder="Your phone number">
+        </div>
+        <button type="submit" class="btn-submit" id="btn-le-cintre">
+          Purchase — $275<span class="spinner" id="spinner-le-cintre"></span>
+        </button>
+        <p style="font-size:10px;color:var(--muted);text-align:center;margin-top:.8rem">Secure payment via Stripe</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- LA DOUILLETTE -->
+  <div class="product-section" id="la-douillette">
+    <div class="product-visual">
+      <span class="product-visual-icon">~</span>
+      <span class="product-visual-label">Photography coming soon</span>
+    </div>
+    <div class="product-info">
+      <h2 class="product-name">La Douillette</h2>
+      <div class="product-subtitle">Soft · Flowing</div>
+      <div class="product-price">$250</div>
+      <div class="product-mto"><span>Made to Order</span> · 3–4 weeks delivery</div>
+      <p class="product-desc">Fabric that moves like a whispered secret. La Douillette is cut for the woman whose power is in her ease — a soft, flowing silhouette that drapes and falls with effortless grace, crafted in finer materials that feel like a second skin.</p>
+
+      <form class="product-form" id="form-la-douillette" onsubmit="handlePurchase(event, 'La Douillette', 250)">
+        <div class="form-group">
+          <label class="form-label">Size</label>
+          <select class="form-select" id="size-la-douillette" required>
+            <option value="">Select a size</option>
+            <option value="0">0</option>
+            <option value="2">2</option>
+            <option value="4">4</option>
+            <option value="6">6</option>
+            <option value="8">8</option>
+            <option value="10">10</option>
+            <option value="12">12</option>
+            <option value="14">14</option>
+          </select>
+          <a href="/size-guide.html" class="size-guide-link" style="margin-top:.5rem">View Size Guide →</a>
+        </div>
+        <div class="form-group">
+          <label class="form-label">First Name</label>
+          <input type="text" class="form-input" id="first-la-douillette" placeholder="Your first name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name</label>
+          <input type="text" class="form-input" id="last-la-douillette" placeholder="Your last name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" id="email-la-douillette" placeholder="Your email address" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone (optional)</label>
+          <input type="tel" class="form-input" id="phone-la-douillette" placeholder="Your phone number">
+        </div>
+        <button type="submit" class="btn-submit" id="btn-la-douillette">
+          Purchase — $250<span class="spinner" id="spinner-la-douillette"></span>
+        </button>
+        <p style="font-size:10px;color:var(--muted);text-align:center;margin-top:.8rem">Secure payment via Stripe</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Confirmation (hidden by default) -->
+  <div class="confirmation" id="confirmation">
+    <div class="confirmation-icon">✦</div>
+    <h2>Order Received</h2>
+    <p>Thank you for your order. Each piece is made to order — your garment is now being prepared with the care and attention it deserves.</p>
+    <p class="ref" id="confirmation-ref"></p>
+    <p id="confirmation-detail"></p>
+    <a href="/shop.html">← Continue Shopping</a>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="/shop.html">Shop</a>
+    <a href="/appointments.html">Custom Appointments</a>
+    <a href="/size-guide.html">Size Guide</a>
+    <a href="/">Home</a>
+  </div>
+  <p class="footer-tagline">"For the rooms that remember you."</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+function getEl(prefix, product) {
+  const p = product === 'Le Cintre' ? 'le-cintre' : 'la-douillette';
+  return document.getElementById(prefix + '-' + p);
+}
+
+async function handlePurchase(event, product, price) {
+  event.preventDefault();
+  const p = product === 'Le Cintre' ? 'le-cintre' : 'la-douillette';
+
+  const firstName = document.getElementById('first-' + p).value.trim();
+  const lastName = document.getElementById('last-' + p).value.trim();
+  const email = document.getElementById('email-' + p).value.trim();
+  const phone = document.getElementById('phone-' + p).value.trim();
+  const size = document.getElementById('size-' + p).value;
+  const btn = document.getElementById('btn-' + p);
+  const spinner = document.getElementById('spinner-' + p);
+
+  if (!firstName || !lastName) { showToast('Please enter your full name.'); return; }
+  if (!email || !email.includes('@')) { showToast('Please enter a valid email address.'); return; }
+  if (!size) { showToast('Please select a size.'); return; }
+
+  btn.disabled = true;
+  spinner.style.display = 'inline-block';
+
+  try {
+    const response = await fetch('/api/create-product-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ firstName, lastName, email, phone, product, size, price })
+    });
+
+    const data = await response.json();
+
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      showToast(data.error || 'Something went wrong. Please try again.');
+      btn.disabled = false;
+      spinner.style.display = 'none';
+    }
+  } catch (err) {
+    showToast('Could not connect to checkout. Please try again.');
+    btn.disabled = false;
+    spinner.style.display = 'none';
+  }
+}
+
+// Show confirmation on return from Stripe
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('confirmed') === 'true') {
+    document.querySelector('.product-section').style.display = 'none';
+    document.querySelector('.product-section + .product-section').style.display = 'none';
+    document.querySelector('.page-header').style.display = 'none';
+    const conf = document.getElementById('confirmation');
+    conf.style.display = 'block';
+    document.getElementById('confirmation-ref').textContent = 'Reference: ' + (params.get('ref') || '—');
+    document.getElementById('confirmation-detail').textContent =
+      (params.get('product') || '') + ' · Size ' + (params.get('size') || '') + ' · $' + (params.get('total') || '');
+  }
+})();
+</script>
+</body>
+</html>
