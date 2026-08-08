@@ -141,8 +141,10 @@ function buildOrderConfirmationEmail({ firstName, ref, productName, size, price,
 /**
  * Build appointment confirmation email
  */
-function buildAppointmentConfirmationEmail({ name, preferredDate, locationPreference, styleNotes }) {
-  const locationLabel = locationPreference === 'Drycleaner partner' ? 'a partner drycleaner' : 'Joy';
+function buildAppointmentConfirmationEmail({ name, ref, path, budget, format, preferredDate }) {
+  const pathLabel = path || 'Design consultation';
+  const budgetLabel = budget || 'To be discussed';
+  const formatLabel = format || 'Video Call';
   const dateDisplay = preferredDate || 'To be confirmed';
 
   return `
@@ -166,23 +168,80 @@ function buildAppointmentConfirmationEmail({ name, preferredDate, locationPrefer
 <body>
   <div class="wrap">
     <h1>House of Tarab</h1>
-    <p class="sub">Custom Appointment Request</p>
+    <p class="sub">Made to Order — Consultation Request</p>
     <div class="divider"></div>
 
     <p>Dear <strong>${name}</strong>,</p>
 
-    <p>Thank you for requesting a custom appointment with House of Tarab. We have received your request and will be in touch shortly to confirm the details.</p>
+    <p>Thank you for reaching out about a Made to Order piece with House of Tarab. Your consultation request has been received, and Joy will follow up within 48 hours to confirm your appointment and begin the design process.</p>
 
     <div class="details">
-      <strong>YOUR APPOINTMENT REQUEST</strong><br>
-      Preferred date: ${dateDisplay}<br>
-      Location: ${locationLabel}<br>
-      ${styleNotes ? `Style notes: ${styleNotes}` : ''}
+      <strong>YOUR CONSULTATION REQUEST</strong><br>
+      Reference: ${ref}<br>
+      Design path: ${pathLabel}<br>
+      Budget: ${budgetLabel}<br>
+      Format: ${formatLabel}<br>
+      Preferred date: ${dateDisplay}
     </div>
 
-    <p>We look forward to creating something extraordinary together. A member of the House will reach out within 48 hours to finalize your appointment.</p>
+    <p>From the first sketch to the final stitch, each Made to Order piece is crafted entirely around you. We cannot wait to begin.</p>
 
     <p class="sig">Warmly,<br>Joy<br>Founder, House of Tarab</p>
+
+    <div class="divider"></div>
+    <div class="footer">
+      hello@houseoftarab.net · Atlanta, Georgia<br>
+      "For the rooms that remember you."
+    </div>
+  </div>
+</body>
+</html>`;
+}
+
+/**
+ * Build piece request confirmation email
+ */
+function buildPieceRequestConfirmationEmail({ name, ref, pieceName, color, dressSize, cupSize }) {
+  return `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body{background:#2C1810;color:#F5EDE4;font-family:Georgia,serif;padding:40px 20px;margin:0}
+    .wrap{max-width:600px;margin:0 auto;background:#3E2723;border:1px solid rgba(201,169,110,0.2);padding:40px}
+    h1{font-family:Georgia,serif;color:#C9A96E;font-size:22px;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:5px}
+    .sub{font-style:italic;color:#9A8070;text-align:center;font-size:14px;margin-bottom:30px}
+    .divider{height:1px;background:linear-gradient(to right,transparent,rgba(201,169,110,0.3),transparent);margin:20px 0}
+    p{font-size:15px;line-height:1.8;color:#F5EDE4}
+    .details{background:#2C1810;border-left:3px solid #C9A96E;padding:15px 20px;margin:20px 0;font-size:14px;line-height:1.7}
+    .details strong{color:#C9A96E}
+    .sig{color:#C9A96E;font-style:italic;margin-top:25px}
+    .footer{text-align:center;font-size:11px;color:#9A8070;margin-top:30px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>House of Tarab</h1>
+    <p class="sub">Les Éternelles — Your Request</p>
+    <div class="divider"></div>
+
+    <p>Dear <strong>${name}</strong>,</p>
+
+    <p>Thank you for your interest in <strong>${pieceName}</strong> from the Les Éternelles collection. Your request has entered the House, and we will follow up within 48 hours to confirm the details of your order.</p>
+
+    <div class="details">
+      <strong>YOUR REQUEST</strong><br>
+      Reference: ${ref}<br>
+      Piece: ${pieceName}<br>
+      Color: ${color}<br>
+      Dress size: ${dressSize}<br>
+      Cup size: ${cupSize}
+    </div>
+
+    <p>Each piece is made to order over 6–10 weeks, with progress photos sent every 2 weeks so you can watch your garment come to life. We will be in touch shortly to collect measurements and finalize your order.</p>
+
+    <p class="sig">With anticipation,<br>Joy<br>Founder, House of Tarab</p>
 
     <div class="divider"></div>
     <div class="footer">
@@ -261,18 +320,19 @@ async function sendOrderConfirmationEmail({ email, firstName, ref, productName, 
 /**
  * Send an appointment confirmation email
  */
-async function sendAppointmentConfirmation({ email, name, preferredDate, locationPreference, styleNotes }) {
+async function sendAppointmentConfirmation({ email, name, ref, path, budget, format, preferredDate }) {
   if (!resend) {
     console.log('Resend not configured — skipping appointment email to', email);
+    console.log(`Would send: ref=${ref}, name=${name}, path=${path}`);
     return { sent: false, reason: 'Resend not configured' };
   }
 
   try {
-    const html = buildAppointmentConfirmationEmail({ name, preferredDate, locationPreference, styleNotes });
+    const html = buildAppointmentConfirmationEmail({ name, ref, path, budget, format, preferredDate });
     const { data, error } = await resend.emails.send({
       from: `Joy at House of Tarab <${FROM_EMAIL}>`,
       to: email,
-      subject: 'Your Custom Appointment Request — House of Tarab',
+      subject: 'Your Made to Order Consultation — House of Tarab',
       html,
     });
 
@@ -289,4 +349,36 @@ async function sendAppointmentConfirmation({ email, name, preferredDate, locatio
   }
 }
 
-module.exports = { sendConfirmationEmail, sendOrderConfirmationEmail, sendAppointmentConfirmation };
+/**
+ * Send a piece request confirmation email
+ */
+async function sendPieceRequestConfirmation({ email, name, ref, pieceName, color, dressSize, cupSize }) {
+  if (!resend) {
+    console.log('Resend not configured — skipping piece request email to', email);
+    console.log(`Would send: ref=${ref}, piece=${pieceName}, name=${name}`);
+    return { sent: false, reason: 'Resend not configured' };
+  }
+
+  try {
+    const html = buildPieceRequestConfirmationEmail({ name, ref, pieceName, color, dressSize, cupSize });
+    const { data, error } = await resend.emails.send({
+      from: `Joy at House of Tarab <${FROM_EMAIL}>`,
+      to: email,
+      subject: `Your ${pieceName} Request — House of Tarab`,
+      html,
+    });
+
+    if (error) {
+      console.error('Resend email error:', error);
+      return { sent: false, error };
+    }
+
+    console.log(`Piece request confirmation email sent to ${email}`);
+    return { sent: true, id: data?.id };
+  } catch (err) {
+    console.error('Failed to send piece request confirmation email:', err);
+    return { sent: false, error: err.message };
+  }
+}
+
+module.exports = { sendConfirmationEmail, sendOrderConfirmationEmail, sendAppointmentConfirmation, sendPieceRequestConfirmation };

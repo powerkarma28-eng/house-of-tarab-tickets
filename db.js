@@ -54,10 +54,41 @@ function initTables() {
       location_preference TEXT DEFAULT 'Joy',
       preferred_date TEXT,
       style_notes TEXT,
+      occasion TEXT,
+      path TEXT,
+      vision TEXT,
+      fabric TEXT,
+      budget TEXT,
+      format TEXT DEFAULT 'Video Call',
+      status TEXT DEFAULT 'pending',
+      ref TEXT UNIQUE,
+      created_at TEXT DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS piece_requests (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      ref TEXT UNIQUE NOT NULL,
+      name TEXT NOT NULL,
+      email TEXT NOT NULL,
+      phone TEXT,
+      color TEXT,
+      dress_size TEXT,
+      cup_size TEXT,
+      notes TEXT,
+      piece_name TEXT NOT NULL,
       status TEXT DEFAULT 'pending',
       created_at TEXT DEFAULT (datetime('now'))
     );
   `);
+
+  // Migration: add new columns to appointments if they don't exist
+  const newCols = [
+    'occasion TEXT', 'path TEXT', 'vision TEXT', 'fabric TEXT',
+    'budget TEXT', 'format TEXT DEFAULT \'Video Call\'', 'ref TEXT UNIQUE'
+  ];
+  for (const col of newCols) {
+    try { db.exec(`ALTER TABLE appointments ADD COLUMN ${col}`); } catch (e) { /* column exists */ }
+  }
 }
 
 function addToWaitlist(email) {
@@ -124,15 +155,22 @@ function updateOrderStatus(ref, status) {
 function createAppointment(data) {
   const d = getDb();
   const stmt = d.prepare(`
-    INSERT INTO appointments (name, email, phone, location_preference, preferred_date, style_notes, status)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO appointments (ref, name, email, phone, occasion, path, vision, fabric, budget, preferred_date, format, location_preference, style_notes, status)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
   const info = stmt.run(
+    data.ref || '',
     data.name,
     data.email,
     data.phone || '',
-    data.locationPreference || 'Joy',
+    data.occasion || '',
+    data.path || '',
+    data.vision || '',
+    data.fabric || '',
+    data.budget || '',
     data.preferredDate || '',
+    data.format || 'Video Call',
+    data.locationPreference || 'Joy',
     data.styleNotes || '',
     'pending'
   );
@@ -149,6 +187,33 @@ function getAppointmentById(id) {
   return d.prepare('SELECT * FROM appointments WHERE id = ?').get(id);
 }
 
+// Piece requests
+function createPieceRequest(data) {
+  const d = getDb();
+  const stmt = d.prepare(`
+    INSERT INTO piece_requests (ref, name, email, phone, color, dress_size, cup_size, notes, piece_name, status)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+  const info = stmt.run(
+    data.ref,
+    data.name,
+    data.email,
+    data.phone || '',
+    data.color || '',
+    data.dressSize || '',
+    data.cupSize || '',
+    data.notes || '',
+    data.pieceName || '',
+    'pending'
+  );
+  return { id: info.lastInsertRowid };
+}
+
+function getPieceRequests() {
+  const d = getDb();
+  return d.prepare('SELECT * FROM piece_requests ORDER BY created_at DESC').all();
+}
+
 module.exports = {
   addToWaitlist,
   getWaitlistCount,
@@ -159,4 +224,6 @@ module.exports = {
   createAppointment,
   getAppointments,
   getAppointmentById,
+  createPieceRequest,
+  getPieceRequests,
 };

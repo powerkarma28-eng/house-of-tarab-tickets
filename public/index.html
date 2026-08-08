@@ -4,248 +4,291 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>House of Tarab — Les Éternelles</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--gold:#C9A96E;--gold-light:#E8D5A3;--deep:#2C1810;--surface:#3E2723;--smoke:#F5EDE4;--muted:#9A8070;--border:rgba(201,169,110,0.15)}
-html{height:100%;scroll-behavior:smooth}
-body{background:var(--deep);color:var(--smoke);font-family:'Jost',sans-serif;font-weight:200;letter-spacing:.04em;min-height:100vh;overflow-x:hidden}
-.bg{position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(201,169,110,0.07) 0%,transparent 70%),radial-gradient(ellipse 40% 80% at 80% 70%,rgba(201,169,110,0.04) 0%,transparent 60%);pointer-events:none;z-index:0}
-
-/* Nav */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(28,15,10,0.92);backdrop-filter:blur(12px);border-bottom:.5px solid var(--border)}
-.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:.8rem 2rem}
-.nav-brand{font-family:'Cinzel',serif;font-size:14px;letter-spacing:.18em;color:var(--smoke);text-decoration:none}
-.nav-links{display:flex;gap:2rem;align-items:center}
-.nav-links a{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
-.nav-links a:hover{color:var(--gold)}
-
-/* Hero */
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;z-index:1;padding:6rem 2rem 4rem}
-.hero-label{font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:block}
-.hero-collection{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(2.5rem,7vw,5rem);font-weight:300;color:var(--gold);letter-spacing:.06em;line-height:1.1;margin-bottom:.5rem}
-.hero-brand{font-family:'Cinzel',serif;font-size:clamp(1.2rem,3vw,1.8rem);font-weight:400;color:var(--smoke);letter-spacing:.15em;margin-bottom:2rem}
-.hero-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,2vw,1.35rem);color:var(--muted);max-width:500px;line-height:1.8;margin-bottom:3rem}
-
-.rule{display:flex;align-items:center;gap:1.5rem;margin:0 auto;max-width:400px;width:100%}
-.rule-line{flex:1;height:.5px;background:linear-gradient(to right,transparent,rgba(201,169,110,.3),transparent)}
-.rule-dot{color:var(--gold);opacity:.5;font-size:14px}
-
-.hero-cta{display:flex;gap:1.5rem;margin-top:3rem;flex-wrap:wrap;justify-content:center}
-.hero-cta a{display:inline-block;padding:.9rem 2.2rem;font-size:10px;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;transition:all .3s}
-.cta-primary{background:var(--gold);color:var(--deep)}
-.cta-primary:hover{background:var(--gold-light)}
-.cta-secondary{border:.5px solid var(--gold);color:var(--gold)}
-.cta-secondary:hover{background:rgba(201,169,110,0.08)}
-
-/* Sections */
-section{padding:5rem 2rem;position:relative;z-index:1}
-.section-inner{max-width:900px;margin:0 auto}
-.section-label{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:block;text-align:center}
-.section-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;color:var(--smoke);text-align:center;line-height:1.3;margin-bottom:2rem}
-
-/* Story */
-.story-text{font-size:15px;line-height:2;color:var(--muted);text-align:center;max-width:650px;margin:0 auto}
-.story-text strong{color:var(--smoke);font-weight:400}
-.story-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;color:var(--gold);text-align:center;margin-top:2rem}
-
-/* Collection teaser */
-.collection-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2.5rem;margin-top:2.5rem}
-.collection-card{background:var(--surface);border:.5px solid var(--border);overflow:hidden;transition:border-color .3s}
-.collection-card:hover{border-color:rgba(201,169,110,0.35)}
-.card-placeholder{height:320px;background:linear-gradient(135deg,rgba(201,169,110,0.06) 0%,rgba(201,169,110,0.02) 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.card-placeholder::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 50% at 50% 40%,rgba(201,169,110,0.12) 0%,transparent 70%)}
-.card-placeholder-icon{font-size:4rem;color:var(--gold);opacity:.3;position:relative;z-index:1}
-.card-body{padding:2rem}
-.card-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.5rem;color:var(--smoke);margin-bottom:.3rem}
-.card-desc{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:1rem}
-.card-price{font-family:'Cinzel',serif;font-size:14px;color:var(--gold);letter-spacing:.08em;margin-bottom:.3rem}
-.card-mto{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
-.card-link{display:inline-block;margin-top:1.2rem;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .3s}
-.card-link:hover{border-color:var(--gold)}
-
-/* Waitlist */
-.waitlist-section{background:var(--surface);border-top:.5px solid var(--border);border-bottom:.5px solid var(--border)}
-.waitlist-inner{max-width:500px;margin:0 auto;text-align:center}
-.waitlist-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--muted);margin-bottom:2rem;line-height:1.7}
-.signup-form{display:flex;max-width:460px;margin:0 auto 1rem}
-.signup-form input{flex:1;background:rgba(255,255,255,.03);border:.5px solid rgba(201,169,110,.25);border-right:none;color:var(--smoke);padding:.85rem 1.2rem;font-family:'Jost',sans-serif;font-size:12px;font-weight:200;letter-spacing:.08em;outline:none;transition:border-color .3s}
-.signup-form input:focus{border-color:var(--gold)}
-.signup-form input::placeholder{color:var(--muted)}
-.signup-form button{background:var(--gold);color:var(--deep);border:none;padding:.85rem 1.8rem;font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:background .3s;white-space:nowrap}
-.signup-form button:hover{background:var(--gold-light)}
-.signup-success{display:none;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--smoke);padding:1rem;border:.5px solid rgba(201,169,110,.3)}
-.signup-count{font-size:11px;color:var(--muted);letter-spacing:.08em;margin-top:.5rem}
-.signup-count span{color:var(--gold)}
-
-/* Footer */
-footer{padding:3rem 2rem;text-align:center;position:relative;z-index:1}
-.footer-links{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem}
-.footer-links a{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
-.footer-links a:hover{color:var(--gold)}
-.footer-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;color:var(--gold);margin-bottom:.5rem}
-.footer-copy{font-size:10px;color:var(--muted);letter-spacing:.1em}
-
-/* Toast */
-.toast{position:fixed;bottom:2rem;right:2rem;background:var(--surface);border:.5px solid var(--gold);padding:1rem 1.5rem;font-size:12px;color:var(--smoke);z-index:9999;opacity:0;transform:translateY(10px);transition:all .4s;pointer-events:none;max-width:300px}
-.toast.show{opacity:1;transform:translateY(0)}
-
-@media(max-width:600px){nav .nav-links{gap:1rem}.hero-cta{flex-direction:column;align-items:center}}
-</style>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="bg"></div>
 
-<!-- Navigation -->
 <nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-brand">House of Tarab</a>
-    <div class="nav-links">
-      <a href="/shop.html">Shop</a>
-      <a href="/appointments.html">Custom Appointments</a>
-      <a href="#story">About</a>
-    </div>
-  </div>
+  <a href="#top" class="nav-logo">House of Tarab</a>
+  <ul class="nav-links">
+    <li><a href="#top">Home</a></li>
+    <li><a href="#pieces">The Pieces</a></li>
+    <li><a href="#made-to-order">Made to Order</a></li>
+    <li><a href="mailto:hello@houseoftarab.net" class="nav-cta">Contact</a></li>
+  </ul>
+  <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
-<!-- Hero -->
-<header class="hero">
-  <span class="hero-label">The Debut Collection</span>
-  <h1 class="hero-collection">Les Éternelles</h1>
-  <div class="hero-brand">House of Tarab</div>
-  <div class="rule"><div class="rule-line"></div><span class="rule-dot">◆</span><div class="rule-line"></div></div>
-  <p class="hero-tagline">Made-to-order garments for the woman who understands the difference between being seen and being felt.</p>
-  <div class="hero-cta">
-    <a href="/shop.html" class="cta-primary">View the Collection</a>
-    <a href="/appointments.html" class="cta-secondary">Custom Appointments</a>
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <p class="hero-ornament fade-up">A Small House, A Precise Wardrobe</p>
+  <h1 class="hero-title fade-up-2">House of Tarab<span>One signature silhouette. The rest, made around you.</span></h1>
+  <p class="hero-tagline fade-up-3">A single, uncompromising piece cut with precision. And beyond it — a Made to Order path, designed with you, or entirely for you.</p>
+  <div class="hero-cta fade-up-3">
+    <a href="#pieces" class="btn-primary">View The Piece</a>
+    <a href="#made-to-order" class="btn-ghost">Book a Consultation</a>
   </div>
-</header>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span class="scroll-label">Scroll</span>
+  </div>
+</section>
 
-<!-- Collection Teaser -->
-<section>
-  <div class="section-inner">
-    <span class="section-label">The Collection</span>
-    <h2 class="section-title">Two Silhouettes.<br>Infinite Presence.</h2>
+<div class="divider"><div class="divider-line"></div><div class="divider-glyph">—</div><div class="divider-line"></div></div>
 
-    <div class="collection-grid">
-      <div class="collection-card">
-        <div class="card-placeholder">
-          <span class="card-placeholder-icon">⌂</span>
+<section class="intro reveal" id="eternelles">
+  <span class="section-label" style="display:block;">Les Éternelles</span>
+  <p class="intro-body">Welcome to <em>Les Éternelles</em> — the beating heart of House of Tarab.</p>
+  <p class="intro-body">We begin with <em>Le Cintré</em> — "The Fitted One." A sculpted silhouette born from the architectural curve of the corset and the golden restraint of 1950s daywear. It is our first release, and it sets the tone for everything to come.</p>
+  <p class="intro-body">Les Éternelles are not seasonal whims. They are our permanent 10 — timeless silhouettes that remain unchanged in form, year after year. What shifts is the mood: the palette that dances with spring's butter yellows, summer's lavenders, and autumn's deeper reveries.</p>
+  <p class="intro-body">These are the dresses you return to. The ones that hold their shape as the world turns, adapting their color to your light. Eternal in cut. Seasonal in soul.</p>
+</section>
+
+<section class="pieces reveal" id="pieces">
+  <div class="section-header">
+    <span class="section-label">The First Release</span>
+  </div>
+
+  <div class="pieces-grid">
+
+    <!-- THE FITTED ONE -->
+    <div class="piece-card">
+      <div class="piece-visual piece-gallery" id="fittedGallery">
+        <div class="piece-number">I</div>
+        <div class="piece-badge">Signature</div>
+        <div class="gallery-track">
+          <img class="gallery-img active" src="assets/fitted-01.jpg" alt="The Fitted One — look 1">
+          <img class="gallery-img" src="assets/fitted-02.jpg" alt="The Fitted One — look 2">
+          <img class="gallery-img" src="assets/fitted-03.jpg" alt="The Fitted One — look 3">
         </div>
-        <div class="card-body">
-          <h3 class="card-name">Le Cintre</h3>
-          <p class="card-desc">A structured, fitted silhouette — architectural lines that sculpt and define. For the woman whose presence is precision.</p>
-          <div class="card-price">$275</div>
-          <div class="card-mto">Made to Order · 3–4 weeks</div>
-          <a href="/shop.html#le-cintre" class="card-link">View Details →</a>
+        <div class="gallery-dots">
+          <button class="dot active" onclick="setGalleryImage(0)" aria-label="Show photo 1"></button>
+          <button class="dot" onclick="setGalleryImage(1)" aria-label="Show photo 2"></button>
+          <button class="dot" onclick="setGalleryImage(2)" aria-label="Show photo 3"></button>
+        </div>
+      </div>
+      <div class="piece-info">
+        <h3 class="piece-name-fr">The Fitted One</h3>
+        <p class="piece-desc">Refined duality. A sculpted corset top meets a waist-defining pencil skirt — structured crepe over a pure silk lining, custom-drafted to your exact waist. The pinnacle of power daywear.</p>
+        <p class="piece-price">From $260 · 6–10 week wait time</p>
+        <p class="piece-colors">Olive · Espresso · Burgundy</p>
+        <p class="piece-note">Progress photos sent every 2 weeks</p>
+        <div class="piece-actions">
+          <button class="btn-primary btn-sm btn-full" onclick="openModal('modalCintre')">View Details &amp; Request</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MADE TO ORDER -->
+    <div class="piece-card">
+      <div class="piece-visual piece-photo">
+        <div class="piece-number">II</div>
+        <div class="piece-badge">Bespoke</div>
+        <img src="assets/made-to-order-01.jpg" alt="Made to Order — past custom pieces">
+      </div>
+      <div class="piece-info">
+        <h3 class="piece-name-fr">Made to Order</h3>
+        <p class="piece-desc">Not the piece above, exactly. Bring a sketch, a photo, a fabric, a feeling — or bring nothing at all and let us design it around you, from the first pin to the final stitch.</p>
+        <p class="piece-price">From $350 · 6–10 week wait time</p>
+        <p class="piece-note">Progress photos sent every 2 weeks</p>
+        <div class="piece-actions">
+          <a href="#made-to-order" class="btn-primary btn-sm btn-full">Book a Consultation</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="mto reveal" id="made-to-order">
+  <div class="mto-wrap">
+    <div class="section-header">
+      <span class="section-label">Made to Order</span>
+      <h2 class="section-title">Design It With Us</h2>
+      <p class="section-sub">Every consultation begins with a conversation, not a form to fill in blindly. Tell us where you are, and we'll meet you there.</p>
+    </div>
+
+    <div class="mto-grid">
+      <div class="mto-side">
+        <p class="mto-side-eyebrow">How It Works</p>
+        <h3 class="mto-side-title">From <em>your</em> idea<br>to a finished piece.</h3>
+        <div class="mto-step">
+          <div class="mto-step-num">I</div>
+          <div class="mto-step-body"><h5>Share Your Vision</h5><p>A sketch, a reference image, a fabric swatch — or simply an occasion and a feeling.</p></div>
+        </div>
+        <div class="mto-step">
+          <div class="mto-step-num">II</div>
+          <div class="mto-step-body"><h5>Consultation</h5><p>We schedule a call to talk through silhouette, fabric, and fit — or, if you'd rather, we design it entirely on your behalf.</p></div>
+        </div>
+        <div class="mto-step">
+          <div class="mto-step-num">III</div>
+          <div class="mto-step-body"><h5>Quote & Deposit</h5><p>You'll receive a mockup and price within 48 hours of your consultation, followed by measurements and a deposit.</p></div>
+        </div>
+        <div class="mto-step">
+          <div class="mto-step-num">IV</div>
+          <div class="mto-step-body"><h5>Made For You</h5><p>Your piece is cut, fitted, and finished by hand over 6–10 weeks — yours alone, with progress photos sent every 2 weeks along the way.</p></div>
         </div>
       </div>
 
-      <div class="collection-card">
-        <div class="card-placeholder">
-          <span class="card-placeholder-icon">~</span>
-        </div>
-        <div class="card-body">
-          <h3 class="card-name">La Douillette</h3>
-          <p class="card-desc">A soft, flowing silhouette — fabric that moves like a whispered secret. For the woman whose power is in her ease.</p>
-          <div class="card-price">$250</div>
-          <div class="card-mto">Made to Order · 3–4 weeks</div>
-          <a href="/shop.html#la-douillette" class="card-link">View Details →</a>
+      <div class="mto-form-box">
+        <form id="mtoForm" onsubmit="submitAppointment(event)">
+          <div class="form-row-2">
+            <div class="field"><label>Full Name</label><input type="text" name="name" placeholder="Your name" required></div>
+            <div class="field"><label>Email</label><input type="email" name="email" placeholder="you@email.com" required></div>
+          </div>
+          <div class="form-row-2">
+            <div class="field"><label>Phone</label><input type="tel" name="phone" placeholder="+1 (___) ___-____"></div>
+            <div class="field"><label>Occasion</label><input type="text" name="occasion" placeholder="e.g. Gala, wedding, everyday"></div>
+          </div>
+
+          <div class="field">
+            <label>How Would You Like to Design This Piece?</label>
+            <div class="choice-group">
+              <label class="choice-pill"><input type="radio" name="path" value="I have a full design in mind" required>I know exactly what I want</label>
+              <label class="choice-pill"><input type="radio" name="path" value="I have a rough idea / inspiration">I have a rough idea</label>
+              <label class="choice-pill"><input type="radio" name="path" value="Design it for me entirely">Design it for me</label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Describe Your Vision <span class="req">(optional if you'd like us to design it for you)</span></label>
+            <textarea name="vision" placeholder="Silhouette, colors, fabric, references — anything you'd like us to know."></textarea>
+          </div>
+
+          <div class="form-row-2">
+            <div class="field">
+              <label>Preferred Fabric <span class="req">(optional)</span></label>
+              <input type="text" name="fabric" placeholder="e.g. Silk crepe, velvet, linen">
+            </div>
+            <div class="field">
+              <label>Budget Range</label>
+              <select name="budget">
+                <option value="">Select a range</option>
+                <option>$700 – $1,200</option>
+                <option>$1,200 – $2,000</option>
+                <option>$2,000 – $3,500</option>
+                <option>$3,500+</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="field">
+              <label>Preferred Consultation Date</label>
+              <input type="date" name="preferredDate">
+            </div>
+            <div class="field">
+              <label>Format</label>
+              <select name="format">
+                <option value="Video Call">Video Call</option>
+                <option value="Phone Call">Phone Call</option>
+                <option value="In Person">In Person (by arrangement)</option>
+              </select>
+            </div>
+          </div>
+
+          <p class="field hint">A member of the House will confirm your consultation time within 48 hours by email.</p>
+          <button type="submit" class="btn-primary btn-full">Request Consultation</button>
+        </form>
+
+        <div class="mto-submitted" id="mtoConfirm">
+          <div class="glyph">—</div>
+          <p><strong style="color:var(--smoke)">Your request has entered the House.</strong><br>Reference <span class="mto-ref" style="color:var(--gold)"></span><br><br>Joy will follow up within 48 hours to confirm your consultation and begin designing your piece.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Story -->
-<section id="story">
-  <div class="section-inner">
-    <span class="section-label">Our Philosophy</span>
-    <h2 class="section-title">Tarab</h2>
-    <div class="rule" style="margin:0 auto 2rem"><div class="rule-line"></div><span class="rule-dot">◆</span><div class="rule-line"></div></div>
-    <p class="story-text">
-      <strong>Tarab</strong> (طرب) is the emotional ecstasy evoked by art — the moment a piece of music, a line of poetry, or a garment moves you beyond words. It is what we chase in every stitch.<br><br>
-      House of Tarab rejects the disposable rhythms of fast fashion. Each piece is <strong>made to order</strong>, crafted from finer materials with an attention to detail that cannot be rushed. We do not chase trends. We build garments that make the wearer feel something extraordinary — the way a room stills when the right woman walks in.
-    </p>
-    <p class="story-quote">"For the rooms that remember you."</p>
-  </div>
-</section>
-
-<!-- Waitlist -->
-<section class="waitlist-section">
-  <div class="waitlist-inner">
-    <span class="section-label">Stay Connected</span>
-    <h2 class="section-title" style="font-size:clamp(1.4rem,3vw,2rem)">Join the House</h2>
-    <p class="waitlist-sub">Be the first to know about new collections, exclusive pieces, and House of Tarab events.</p>
-    <div class="signup-form" id="signup-form">
-      <input type="email" id="signup-email" placeholder="Your email address" />
-      <button onclick="handleSignup()">Join</button>
-    </div>
-    <div class="signup-success" id="signup-success">You are on the list. Welcome to the House. ✦</div>
-    <p class="signup-count" id="signup-count"></p>
-  </div>
-</section>
-
-<!-- Footer -->
 <footer>
-  <div class="footer-links">
-    <a href="/shop.html">Shop</a>
-    <a href="/appointments.html">Custom Appointments</a>
-    <a href="/size-guide.html">Size Guide</a>
-    <a href="https://instagram.com/houseoftarab" target="_blank">Instagram</a>
-    <a href="mailto:hello@houseoftarab.net">Email</a>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo-text">House of Tarab</div>
+      <p>Founded by Joy. Every piece from Les Éternelles is made to order, in your measurements, for the moment it's made for.</p>
+    </div>
+    <div class="footer-col">
+      <h4>The Capsule</h4>
+      <a href="#pieces">The Fitted One</a>
+      <a href="#made-to-order">Made to Order</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="mailto:hello@houseoftarab.net">hello@houseoftarab.net</a>
+      <a href="#made-to-order">Book a Consultation</a>
+    </div>
   </div>
-  <p class="footer-tagline">"For the rooms that remember you."</p>
-  <p class="footer-copy">House of Tarab · Atlanta, Georgia · hello@houseoftarab.net</p>
+  <div class="footer-bottom">
+    <p>© 2026 House of Tarab. All rights reserved.</p>
+    <p>For the rooms that remember you.</p>
+  </div>
 </footer>
 
-<div class="toast" id="toast"></div>
+<!-- ── MODAL: THE FITTED ONE — FULL DETAILS + REQUEST ─────────────────── -->
+<div class="modal-overlay" id="modalCintre">
+  <div class="modal-box modal-box-wide">
+    <button class="modal-close" onclick="closeModal('modalCintre')">&times;</button>
+    <p class="modal-eyebrow">Signature — From $260</p>
+    <h3 class="modal-title">The Fitted One</h3>
 
-<script>
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 4000);
-}
+    <div class="modal-description">
+      <p>Refined duality. This two-piece semi-couture set unites a sculpted corset top with a waist-defining pencil skirt—both engineered with a structured crepe shell over a pure silk lining that breathes against the skin.</p>
+      <p>The corset features ultralight platinum boning for luxurious, unbending support, cinched perfectly via the fully adjustable back lace. The square neckline and short sleeves keep the silhouette powerful and modern.</p>
+      <p>Inside, every silk seam is hand-stitched to move organically with your body, while the crepe exterior is machine-finished for razor-sharp, architectural lines. Custom-drafted to your exact waist, this is the pinnacle of power daywear for the modern businesswoman—uncompromising structure, effortless comfort, and refined femininity that commands every room.</p>
+      <p class="modal-fine-print">6–10 week wait time. You'll receive progress photos every 2 weeks as your piece is made.</p>
+    </div>
 
-async function handleSignup() {
-  const email = document.getElementById('signup-email').value.trim();
-  if (!email || !email.includes('@')) {
-    showToast('Please enter a valid email address.');
-    return;
-  }
-  try {
-    const response = await fetch('/api/waitlist', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email })
-    });
-    const data = await response.json();
-    if (data.success) {
-      document.getElementById('signup-form').style.display = 'none';
-      document.getElementById('signup-success').style.display = 'block';
-      showToast('You are on the list. Welcome to the House.');
-    } else {
-      showToast(data.error || 'Something went wrong.');
-    }
-  } catch (error) {
-    const list = JSON.parse(localStorage.getItem('hot_waitlist') || '[]');
-    if (list.includes(email)) {
-      showToast('You are already on the list!');
-      return;
-    }
-    list.push(email);
-    localStorage.setItem('hot_waitlist', JSON.stringify(list));
-    document.getElementById('signup-form').style.display = 'none';
-    document.getElementById('signup-success').style.display = 'block';
-    showToast('You are on the list. Welcome to the House.');
-  }
-}
+    <form onsubmit="submitPieceRequest(event, 'The Fitted One')">
+      <div class="form-row-2">
+        <div class="field"><label>Full Name</label><input type="text" name="name" required></div>
+        <div class="field"><label>Email</label><input type="email" name="email" required></div>
+      </div>
+      <div class="form-row-2">
+        <div class="field"><label>Phone</label><input type="tel" name="phone"></div>
+        <div class="field">
+          <label>Preferred Color</label>
+          <select name="color">
+            <option>Olive</option><option>Espresso</option><option>Burgundy</option>
+          </select>
+        </div>
+      </div>
 
-fetch('/api/waitlist/count').then(r => r.json()).then(d => {
-  const el = document.getElementById('signup-count');
-  if (d.count > 0) el.innerHTML = '<span>' + d.count + '</span> ' + (d.count === 1 ? 'person has' : 'people have') + ' joined the House';
-}).catch(() => {});
-</script>
+      <div class="size-section">
+        <p class="size-section-title">Skirt — Dress Size</p>
+        <div class="field">
+          <label>Dress Size <span class="req">(US sizing, 0–14)</span></label>
+          <select name="dressSize" required>
+            <option value="">Select size</option>
+            <option>0</option><option>2</option><option>4</option><option>6</option>
+            <option>8</option><option>10</option><option>12</option><option>14</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="size-section">
+        <p class="size-section-title">Corset — Cup Size</p>
+        <div class="field">
+          <label>Cup Size</label>
+          <select name="cupSize" required>
+            <option value="">Select cup size</option>
+            <option>AA</option><option>A</option><option>B</option><option>C</option>
+            <option>D</option><option>DD / E</option><option>DDD / F</option>
+            <option>G and above</option>
+            <option>Not sure — I'll provide measurements</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Notes <span class="req">(fit, measurements, timeline)</span></label>
+        <textarea name="notes" placeholder="Anything we should know before your fitting."></textarea>
+      </div>
+      <button type="submit" class="btn-primary btn-full">Submit Request</button>
+    </form>
+  </div>
+</div>
+
+<div class="toast"></div>
+<script src="js/main.js"></script>
 </body>
 </html>

@@ -8,6 +8,7 @@ const path = require('path');
 const waitlistRoutes = require('./routes/waitlist');
 const checkoutRoutes = require('./routes/checkout');
 const appointmentsRoutes = require('./routes/appointments');
+const pieceRequestsRoutes = require('./routes/piece-requests');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -32,6 +33,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/waitlist', waitlistRoutes);
 app.use('/api', checkoutRoutes);
 app.use('/api/appointments', appointmentsRoutes);
+app.use('/api/piece-request', pieceRequestsRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

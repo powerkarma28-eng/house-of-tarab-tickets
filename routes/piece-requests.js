@@ -1,17 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
-const { sendAppointmentConfirmation } = require('../email');
+const { sendPieceRequestConfirmation } = require('../email');
 
 function refCode(prefix) {
   const n = Math.floor(1000 + Math.random() * 9000);
   return `${prefix}-${new Date().getFullYear()}-${n}`;
 }
 
-// POST /api/appointments — create a custom consultation booking
+// POST /api/piece-request — submit a piece request (The Fitted One)
 router.post('/', async (req, res) => {
   try {
-    const { name, email, phone, occasion, path, vision, fabric, budget, preferredDate, format } = req.body;
+    const { name, email, phone, color, dressSize, cupSize, notes, piece } = req.body;
 
     if (!name || !name.trim()) {
       return res.status(400).json({ success: false, error: 'Please enter your name.' });
@@ -20,56 +20,53 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ success: false, error: 'Please enter a valid email address.' });
     }
 
-    const ref = refCode('MTO');
+    const ref = refCode('REQ');
 
-    db.createAppointment({
+    db.createPieceRequest({
       ref,
       name: name.trim(),
       email: email.toLowerCase().trim(),
       phone: phone || '',
-      occasion: occasion || '',
-      path: path || '',
-      vision: vision || '',
-      fabric: fabric || '',
-      budget: budget || '',
-      preferredDate: preferredDate || '',
-      format: format || 'Video Call',
+      color: color || 'Olive',
+      dressSize: dressSize || '',
+      cupSize: cupSize || '',
+      notes: notes || '',
+      pieceName: piece || 'The Fitted One',
     });
 
     // Send confirmation email
     if (email) {
-      sendAppointmentConfirmation({
+      sendPieceRequestConfirmation({
         email,
         name: name.trim(),
         ref,
-        path: path || '',
-        budget: budget || '',
-        format: format || 'Video Call',
-        preferredDate: preferredDate || '',
+        pieceName: piece || 'The Fitted One',
+        color: color || 'Olive',
+        dressSize: dressSize || '',
+        cupSize: cupSize || '',
       });
     }
 
-    console.log(`Appointment booked: ${name} (${email}), ref: ${ref}`);
+    console.log(`Piece request received: ${name} (${email}), ref: ${ref}`);
 
     return res.json({
       success: true,
       ref,
-      id: ref,
-      message: 'Your consultation request has been received. Joy will follow up within 48 hours.',
+      message: 'Request received. We\'ll follow up within 48 hours.',
     });
   } catch (err) {
-    console.error('Appointment booking error:', err);
+    console.error('Piece request error:', err);
     return res.status(500).json({ success: false, error: 'Server error. Please try again.' });
   }
 });
 
-// GET /api/appointments — list all appointments (admin)
+// GET /api/piece-request — list all piece requests (admin)
 router.get('/', (req, res) => {
   try {
-    const appointments = db.getAppointments();
-    return res.json({ appointments });
+    const requests = db.getPieceRequests();
+    return res.json({ requests });
   } catch (err) {
-    console.error('Appointments list error:', err);
+    console.error('Piece requests list error:', err);
     return res.status(500).json({ error: 'Server error.' });
   }
 });
