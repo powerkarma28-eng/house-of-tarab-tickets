@@ -56,15 +56,17 @@
       <div class="piece-visual piece-gallery" id="fittedGallery">
         <div class="piece-number">I</div>
         <div class="piece-badge">Signature</div>
-        <div class="gallery-track">
+               <div class="gallery-track">
           <img class="gallery-img active" src="assets/fitted-01.jpg" alt="The Fitted One — look 1">
           <img class="gallery-img" src="assets/fitted-02.jpg" alt="The Fitted One — look 2">
-          <img class="gallery-img" src="assets/fitted-03.jpg" alt="The Fitted One — look 3">
+          <img class="gallery-img" src="assets/fitted-04.jpg" alt="The Fitted One — look 3">
+          <img class="gallery-img" src="assets/fitted-05.jpg" alt="The Fitted One — look 4">
         </div>
         <div class="gallery-dots">
           <button class="dot active" onclick="setGalleryImage(0)" aria-label="Show photo 1"></button>
           <button class="dot" onclick="setGalleryImage(1)" aria-label="Show photo 2"></button>
           <button class="dot" onclick="setGalleryImage(2)" aria-label="Show photo 3"></button>
+          <button class="dot" onclick="setGalleryImage(3)" aria-label="Show photo 4"></button>
         </div>
       </div>
       <div class="piece-info">
@@ -81,10 +83,23 @@
 
     <!-- MADE TO ORDER -->
     <div class="piece-card">
-      <div class="piece-visual piece-photo">
+          <div class="piece-visual piece-gallery" id="mtoGallery">
         <div class="piece-number">II</div>
         <div class="piece-badge">Bespoke</div>
-        <img src="assets/made-to-order-01.jpg" alt="Made to Order — past custom pieces">
+        <div class="gallery-track">
+          <img class="gallery-img active" src="assets/made-to-order-01.jpg" alt="Made to Order — look 1">
+          <img class="gallery-img" src="assets/mto-02.jpg" alt="Made to Order — look 2">
+          <img class="gallery-img" src="assets/mto-03.jpg" alt="Made to Order — look 3">
+          <img class="gallery-img" src="assets/mto-04.jpg" alt="Made to Order — look 4">
+          <img class="gallery-img" src="assets/mto-05.jpg" alt="Made to Order — look 5">
+        </div>
+        <div class="gallery-dots">
+          <button class="dot active" onclick="setGalleryImage(0, 'mtoGallery')" aria-label="Show photo 1"></button>
+          <button class="dot" onclick="setGalleryImage(1, 'mtoGallery')" aria-label="Show photo 2"></button>
+          <button class="dot" onclick="setGalleryImage(2, 'mtoGallery')" aria-label="Show photo 3"></button>
+          <button class="dot" onclick="setGalleryImage(3, 'mtoGallery')" aria-label="Show photo 4"></button>
+          <button class="dot" onclick="setGalleryImage(4, 'mtoGallery')" aria-label="Show photo 5"></button>
+        </div>
       </div>
       <div class="piece-info">
         <h3 class="piece-name-fr">Made to Order</h3>
