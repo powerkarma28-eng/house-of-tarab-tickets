@@ -32,23 +32,30 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(ov => closeModal(ov.id));
   });
 
-  initGallery();
-});
+     initGalleries();
+  });
 
-// ── FITTED ONE PHOTO GALLERY ─────────────────────────────────────────────
-let galleryIndex = 0, galleryTimer = null;
-function initGallery() {
-  const imgs = document.querySelectorAll('#fittedGallery .gallery-img');
-  if (!imgs.length) return;
-  galleryTimer = setInterval(() => setGalleryImage((galleryIndex + 1) % imgs.length), 4500);
-}
-function setGalleryImage(i) {
-  const imgs = document.querySelectorAll('#fittedGallery .gallery-img');
-  const dots = document.querySelectorAll('#fittedGallery .dot');
-  imgs.forEach((img, idx) => img.classList.toggle('active', idx === i));
-  dots.forEach((dot, idx) => dot.classList.toggle('active', idx === i));
-  galleryIndex = i;
-}
+  // ── PHOTO GALLERIES (supports multiple independent galleries by id) ──────
+  const galleryState = {}; // { [galleryId]: { index, timer } }
+  function initGalleries() {
+    document.querySelectorAll('.piece-gallery').forEach(g => initGallery(g.id));
+  }
+  function initGallery(galleryId) {
+    const imgs = document.querySelectorAll(`#${galleryId} .gallery-img`);
+    if (!imgs.length) return;
+    galleryState[galleryId] = { index: 0 };
+    galleryState[galleryId].timer = setInterval(() => {
+      const next = (galleryState[galleryId].index + 1) % imgs.length;
+      setGalleryImage(next, galleryId);
+    }, 4500);
+  }
+  function setGalleryImage(i, galleryId = 'fittedGallery') {
+    const imgs = document.querySelectorAll(`#${galleryId} .gallery-img`);
+    const dots = document.querySelectorAll(`#${galleryId} .dot`);
+    imgs.forEach((img, idx) => img.classList.toggle('active', idx === i));
+    dots.forEach((dot, idx) => dot.classList.toggle('active', idx === i));
+    if (galleryState[galleryId]) galleryState[galleryId].index = i;
+  }
 
 // ── TOAST ─────────────────────────────────────────────────────────────────
 function showToast(msg, duration = 4200) {
